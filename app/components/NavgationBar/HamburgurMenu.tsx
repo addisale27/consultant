@@ -9,12 +9,14 @@ import HamburgurDestination from "./HamburgurDestinationMenu";
 interface HamburgurMenuProps {
   nations: string[];
 }
+
 const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ nations }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
+
   return (
     <>
       <div className="relative z-30" onClick={toggleMenu}>
@@ -28,6 +30,7 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ nations }) => {
             </Link>
 
             <HamburgurDestination scholarshipsDestinations={nations} />
+
             <Link href="/profile">
               <MenuItem onClick={toggleMenu}>Apply Now</MenuItem>
             </Link>
