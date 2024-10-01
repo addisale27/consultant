@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { AiFillCaretDown, AiFillCaretRight } from "react-icons/ai";
 import MenuItem from "./MenuItem";
-import BackDrop from "./BackDrop";
+
 import { useState } from "react";
 
 export type Scholarship = {
@@ -29,13 +29,9 @@ const HamburgurDestination: React.FC<DestinationProps> = ({
     <>
       <div className="relative z-30">
         <div
-          onMouseEnter={() => {
-            setIsOpen(true);
+          onClick={(prev) => {
+            setIsOpen(!prev);
           }}
-          onMouseLeave={() => {
-            setIsOpen(false);
-          }}
-          aria-expanded={isOpen}
           className="flex flex-col gap-1 cursor-pointer px-4 py-3 hover:bg-neutral-100 transition text-md font-normal"
         >
           <div className="flex gap-1 items-center">
@@ -59,13 +55,13 @@ const HamburgurDestination: React.FC<DestinationProps> = ({
           )}
         </div>
       </div>
-      {isOpen && (
+      {/* {isOpen && (
         <BackDrop
           onClick={() => {
             setIsOpen((prev) => !prev);
           }}
         />
-      )}
+      )} */}
     </>
   );
 };

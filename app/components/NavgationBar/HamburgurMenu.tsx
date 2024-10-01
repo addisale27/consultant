@@ -1,10 +1,13 @@
 "use client";
 import { useState } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
+import {
+  AiFillCaretDown,
+  AiFillCaretRight,
+  AiOutlineMenu,
+} from "react-icons/ai";
 import BackDrop from "./BackDrop";
 import MenuItem from "./MenuItem";
 import Link from "next/link";
-import HamburgurDestination from "./HamburgurDestinationMenu";
 
 interface HamburgurMenuProps {
   nations: string[];
@@ -12,9 +15,14 @@ interface HamburgurMenuProps {
 
 const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ nations }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDestinationOpen, setIsDestinationOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const toggleDestinationMenu = () => {
+    setIsDestinationOpen((prev) => !prev);
   };
 
   return (
@@ -29,7 +37,30 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ nations }) => {
               <MenuItem onClick={toggleMenu}>Profile</MenuItem>
             </Link>
 
-            <HamburgurDestination scholarshipsDestinations={nations} />
+            <div className="relative z-30">
+              <div
+                onClick={toggleDestinationMenu}
+                className="flex flex-col gap-1 cursor-pointer px-4 py-3 hover:bg-neutral-100 transition text-md font-normal"
+              >
+                <div className="flex gap-1 items-center">
+                  <span>Destinations</span>
+                  {isDestinationOpen ? (
+                    <AiFillCaretDown />
+                  ) : (
+                    <AiFillCaretRight />
+                  )}
+                </div>
+                {isDestinationOpen && (
+                  <div className="px-4 cursor-pointer flex flex-col">
+                    {nations.map((destination) => (
+                      <Link key={destination} href={`/${destination}`}>
+                        <MenuItem onClick={toggleMenu}>{destination}</MenuItem>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
 
             <Link href="/profile">
               <MenuItem onClick={toggleMenu}>Apply Now</MenuItem>
