@@ -9,7 +9,7 @@ const NavBar = () => {
     new Set(scholarship.map((item) => item.nation))
   );
   return (
-    <div className="sticky top-0 w-full z-30 ">
+    <div className="sticky top-0 w-full bg-slate-200 z-30 shadow-sm ">
       <div className="border-b-[1px] py-4">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
