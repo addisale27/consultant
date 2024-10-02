@@ -5,7 +5,7 @@ import { FaGlobeAmericas } from "react-icons/fa";
 
 export const services = [
   {
-    title: "Scholarship Application Guidance",
+    title: " Application Guidance",
     description:
       "Receive expert assistance in identifying and applying for scholarships that fit your profile.",
     Icon: FaGraduationCap, // Replace with actual path

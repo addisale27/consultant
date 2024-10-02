@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "./components/NavgationBar/NavBar";
 import Footer from "./components/Footer/Footer";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,6 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster
+          toastOptions={{
+            style: { background: "rgb(0,0,255)", color: "#fff" },
+            duration: 3000, // Optional: Control how long the toast is visible
+          }}
+          position="top-center" // Position the toast
+          reverseOrder={false} // This will keep the order of toasts
+        />
         <div className="flex flex-col min-h-screen">
           <NavBar />
           <main className="flex-grow">{children}</main>

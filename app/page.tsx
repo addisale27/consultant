@@ -1,3 +1,4 @@
+"use client";
 import HeroSection from "./components/HomePage/HeroSection";
 import ServiceCard from "./components/HomePage/ServiceCard";
 import { services } from "../utils/ServiceOverview";
@@ -14,7 +15,7 @@ const Home = () => {
           <div className="flex flex-wrap justify-center gap-4 mt-7">
             {ourServices.map((service) => {
               return (
-                <div key={service.title}>
+                <div key={service.title} onClick={() => {}}>
                   <ServiceCard serviceOverview={service} />
                 </div>
               );
