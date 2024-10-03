@@ -6,12 +6,15 @@ import Link from "next/link";
 import { AiOutlineGoogle } from "react-icons/ai";
 import Heading from "../components/Heading";
 import Input from "../components/Inputs/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
-
-const LoginForm = () => {
+import { CurrentUser } from "../components/NavgationBar/UserMenu";
+interface RegisterFormProps {
+  currentUser: CurrentUser | null;
+}
+const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const {
@@ -37,6 +40,17 @@ const LoginForm = () => {
       }
     });
   };
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/");
+      router.refresh();
+    }
+  }, [currentUser, router]);
+
+  if (currentUser) {
+    // Show loading state while submitting
+    return <p className="text-center">Logged in. Redirecting..</p>;
+  }
 
   return (
     <>
@@ -47,10 +61,10 @@ const LoginForm = () => {
         label="Sign In with Google"
         icon={AiOutlineGoogle}
         onClick={() => {
-          setIsLoading(true);
           signIn("google");
         }}
       />
+
       <hr className="bg-slate-300 w-full h-px" />
 
       <Input

@@ -7,13 +7,17 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import Heading from "../components/Heading";
 import Input from "../components/Inputs/Input";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import { CurrentUser } from "../components/NavgationBar/UserMenu";
 
 // Define the callback type
-const RegisterForm = () => {
+interface RegisterFormProps {
+  currentUser: CurrentUser | null;
+}
+const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const {
@@ -60,6 +64,18 @@ const RegisterForm = () => {
         setIsLoading(false);
       });
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/");
+      router.refresh();
+    }
+  }, [currentUser, router]);
+
+  if (currentUser) {
+    // Show loading state while submitting
+    return <p className="text-center">Logged in. Redirecting..</p>;
+  }
 
   return (
     <>

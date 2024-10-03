@@ -11,7 +11,7 @@ const NavBar = async () => {
     new Set(scholarship.map((item) => item.nation))
   );
   const currentUser = await getCurrentUser();
-  console.log(currentUser);
+
   return (
     <div className="sticky top-0 w-full bg-slate-200 z-30 shadow-sm">
       <div className="border-b-[1px] py-4">
