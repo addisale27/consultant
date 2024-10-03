@@ -4,12 +4,16 @@ import Destination from "./Destination";
 import { scholarship } from "@/utils/scholarship";
 import UserMenu from "./UserMenu";
 import HamburgurMenu from "./HamburgurMenu";
-const NavBar = () => {
+import { getCurrentUser } from "@/actions/getCurrentUser";
+
+const NavBar = async () => {
   const scholarshipsDestinations = Array.from(
     new Set(scholarship.map((item) => item.nation))
   );
+  const currentUser = await getCurrentUser();
+  console.log(currentUser);
   return (
-    <div className="sticky top-0 w-full bg-slate-200 z-30 shadow-sm ">
+    <div className="sticky top-0 w-full bg-slate-200 z-30 shadow-sm">
       <div className="border-b-[1px] py-4">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
@@ -20,19 +24,15 @@ const NavBar = () => {
             <div className="md:hidden block">
               <HamburgurMenu nations={scholarshipsDestinations} />
             </div>
-            <div className=" items-center gap-4 hidden md:flex">
+            <div className="items-center gap-4 hidden md:flex">
               <div className="flex gap-8 md:gap-12 items-center">
-                <div>
-                  <Destination
-                    scholarshipsDestinations={scholarshipsDestinations}
-                  />
-                </div>
+                <Destination
+                  scholarshipsDestinations={scholarshipsDestinations}
+                />
                 <div>Apply Now</div>
                 <div>About Us</div>
                 <div>Contact Us</div>
-                <div>
-                  <UserMenu />
-                </div>
+                <UserMenu currentUser={currentUser} />
               </div>
             </div>
           </div>
