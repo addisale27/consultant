@@ -22,7 +22,6 @@ export async function getCurrentUser() {
     });
 
     if (!currentUser) {
-      console.log("no sessions");
       return null;
     }
 

@@ -4,6 +4,7 @@ import HeroSection from "./components/HomePage/HeroSection";
 import ServiceCard from "./components/HomePage/ServiceCard";
 import { services } from "../utils/ServiceOverview";
 import Container from "./components/Container";
+import Testimonial from "./components/HomePage/Testimonial";
 
 const Home = () => {
   const ourServices = services;
@@ -23,6 +24,11 @@ const Home = () => {
               );
             })}
           </div>
+        </Container>
+      </div>
+      <div className="mt-10 md:mt-[100px]">
+        <Container>
+          <Testimonial />
         </Container>
       </div>
     </div>
