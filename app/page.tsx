@@ -1,10 +1,10 @@
 "use client";
-export const revalidate = 0;
+
 import HeroSection from "./components/HomePage/HeroSection";
 import ServiceCard from "./components/HomePage/ServiceCard";
 import { services } from "../utils/ServiceOverview";
 import Container from "./components/Container";
-import exp from "constants";
+
 const Home = () => {
   const ourServices = services;
   return (
