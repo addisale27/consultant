@@ -43,9 +43,13 @@ const LoginForm = () => {
       <Heading title="Sign In" />
       <Button
         outline
+        disabled={isLoading}
         label="Sign In with Google"
         icon={AiOutlineGoogle}
-        onClick={() => {}}
+        onClick={() => {
+          setIsLoading(true);
+          signIn("google");
+        }}
       />
       <hr className="bg-slate-300 w-full h-px" />
 
