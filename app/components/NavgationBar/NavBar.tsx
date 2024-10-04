@@ -22,7 +22,10 @@ const NavBar = async () => {
             </div>
             <div className="">search</div>
             <div className="md:hidden block">
-              <HamburgurMenu nations={scholarshipsDestinations} />
+              <HamburgurMenu
+                nations={scholarshipsDestinations}
+                currentUser={currentUser}
+              />
             </div>
             <div className="items-center gap-4 hidden md:flex">
               <div className="flex gap-8 md:gap-12 items-center">

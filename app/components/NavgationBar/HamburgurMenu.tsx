@@ -8,12 +8,19 @@ import {
 import BackDrop from "./BackDrop";
 import MenuItem from "./MenuItem";
 import Link from "next/link";
+import { CurrentUser } from "./UserMenu";
+import Avatar from "../Avatar";
+import { useRouter } from "next/navigation";
 
 interface HamburgurMenuProps {
   nations: string[];
+  currentUser: CurrentUser | null;
 }
 
-const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ nations }) => {
+const HamburgurMenu: React.FC<HamburgurMenuProps> = ({
+  nations,
+  currentUser,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDestinationOpen, setIsDestinationOpen] = useState(false);
 
@@ -25,6 +32,13 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ nations }) => {
     setIsDestinationOpen((prev) => !prev);
   };
 
+  const handleTouchStart = (event: React.TouchEvent) => {
+    event.stopPropagation(); // Prevent event bubbling
+    toggleDestinationMenu(); // Toggle destination menu on touch start
+  };
+
+  const router = useRouter();
+
   return (
     <>
       <div className="relative z-30" onClick={toggleMenu}>
@@ -33,16 +47,28 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ nations }) => {
         </span>
         {isOpen && (
           <div className="absolute rounded-md shadow-md w-[200px] right-0 top-12 cursor-pointer flex flex-col bg-white">
-            <Link href="/profile">
-              <MenuItem onClick={toggleMenu}>Profile</MenuItem>
-            </Link>
+            <MenuItem
+              onClick={() => {
+                router.push("/register");
+              }}
+            >
+              {currentUser ? (
+                <span className="flex gap-2 items-center">
+                  <Avatar src={currentUser?.image} />
+                  <span className="text-sm">{currentUser.name}</span>
+                </span>
+              ) : (
+                `Join Us`
+              )}
+            </MenuItem>
 
-            <div className="relative z-30">
-              <div
-                onClick={toggleDestinationMenu}
-                className="flex flex-col gap-1 cursor-pointer px-4 py-3 hover:bg-neutral-100 transition text-md font-normal"
-              >
-                <div className="flex gap-1 items-center">
+            <div className="relative z-40">
+              <div className="flex flex-col gap-1 cursor-pointer px-4 py-3 hover:bg-neutral-100 transition text-md font-normal">
+                <div
+                  className="flex gap-1 items-center"
+                  onTouchStart={handleTouchStart} // Use touch start
+                  onTouchEnd={(e) => e.stopPropagation()} // Stop propagation on touch end
+                >
                   <span>Destinations</span>
                   {isDestinationOpen ? (
                     <AiFillCaretDown />
@@ -53,8 +79,12 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ nations }) => {
                 {isDestinationOpen && (
                   <div className="px-4 cursor-pointer flex flex-col">
                     {nations.map((destination) => (
-                      <Link key={destination} href={`/${destination}`}>
-                        <MenuItem onClick={toggleMenu}>{destination}</MenuItem>
+                      <Link
+                        key={destination}
+                        href={`/${destination}`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <MenuItem onClick={() => {}}>{destination}</MenuItem>
                       </Link>
                     ))}
                   </div>
@@ -63,13 +93,13 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ nations }) => {
             </div>
 
             <Link href="/profile">
-              <MenuItem onClick={toggleMenu}>Apply Now</MenuItem>
+              <MenuItem onClick={() => setIsOpen(false)}>Apply Now</MenuItem>
             </Link>
             <Link href="/profile">
-              <MenuItem onClick={toggleMenu}>About Us</MenuItem>
+              <MenuItem onClick={() => setIsOpen(false)}>About Us</MenuItem>
             </Link>
             <Link href="/profile">
-              <MenuItem onClick={toggleMenu}>Contact Us</MenuItem>
+              <MenuItem onClick={() => setIsOpen(false)}>Contact Us</MenuItem>
             </Link>
           </div>
         )}
