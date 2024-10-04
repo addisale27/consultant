@@ -34,7 +34,9 @@ const NavBar = async () => {
                 />
                 <div>Apply Now</div>
                 <div>About Us</div>
-                <div>Contact Us</div>
+                <div>
+                  <Link href="/contactUs">Contact Us</Link>
+                </div>
                 <UserMenu currentUser={currentUser} />
               </div>
             </div>

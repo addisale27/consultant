@@ -96,10 +96,10 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({
               <MenuItem onClick={() => setIsOpen(false)}>Apply Now</MenuItem>
             </Link>
             <Link href="/profile">
-              <MenuItem onClick={() => setIsOpen(false)}>About Us</MenuItem>
+              <MenuItem onClick={() => {}}>About Us</MenuItem>
             </Link>
-            <Link href="/profile">
-              <MenuItem onClick={() => setIsOpen(false)}>Contact Us</MenuItem>
+            <Link href="/contactUs">
+              <MenuItem onClick={() => {}}>Contact Us</MenuItem>
             </Link>
           </div>
         )}

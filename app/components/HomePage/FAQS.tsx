@@ -5,6 +5,8 @@ import {
   FaChevronRight,
   FaQuestionCircle,
 } from "react-icons/fa";
+import Heading from "../Heading";
+import Button from "../Button";
 
 const FAQS = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -64,6 +66,11 @@ const FAQS = () => {
             </div>
           );
         })}
+      </div>
+      <div className="flex flex-col gap-4 justify-center items-center">
+        <Heading title="Contact us for more information" />
+
+        <Button label="Contact Us" onClick={() => {}} />
       </div>
     </div>
   );
