@@ -95,12 +95,22 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({
             <Link href="/profile">
               <MenuItem onClick={() => setIsOpen(false)}>Apply Now</MenuItem>
             </Link>
-            <Link href="/profile">
-              <MenuItem onClick={() => {}}>About Us</MenuItem>
-            </Link>
-            <Link href="/contactUs">
-              <MenuItem onClick={() => {}}>Contact Us</MenuItem>
-            </Link>
+
+            <MenuItem
+              onClick={() => {
+                router.push("/aboutUs");
+              }}
+            >
+              About Us
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                router.push("/contactUs");
+              }}
+            >
+              Contact Us
+            </MenuItem>
           </div>
         )}
       </div>
