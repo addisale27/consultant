@@ -21,7 +21,6 @@ const ContactForm = () => {
     defaultValues: {
       name: "",
       email: "",
-      phoneNumber: "",
 
       message: "",
     },
@@ -73,14 +72,7 @@ const ContactForm = () => {
         type="email"
         required
       />
-      <Input
-        id="phoneNumber"
-        label="Phone Number"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        type="number"
-      />
+
       <TextArea
         id="message"
         label="Message"

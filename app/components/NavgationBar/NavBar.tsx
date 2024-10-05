@@ -32,7 +32,9 @@ const NavBar = async () => {
                 <Destination
                   scholarshipsDestinations={scholarshipsDestinations}
                 />
-                <div>Apply Now</div>
+                <div>
+                  <Link href="/apply">Apply Now </Link>
+                </div>
                 <div>
                   <Link href="/aboutUs">About Us</Link>
                 </div>
