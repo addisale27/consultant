@@ -3,11 +3,23 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FaTrash } from "react-icons/fa"; // React Icons for the trash icon
+interface DocumentApplyProps {
+  passportFile: File | null; // To allow for the possibility that there might not be a file uploaded yet
+  idFile: File | null;
+  educationFiles: File[]; // Multiple files for educational background
+  setPassportFile: (file: File | null) => void; // Setter function for passport file
+  setIdFile: (file: File | null) => void; // Setter function for ID file
+  setEducationFiles: React.Dispatch<React.SetStateAction<File[]>>;
+}
 
-const DocumentApply = () => {
-  const [passportFile, setPassportFile] = useState<File | null>(null);
-  const [idFile, setIdFile] = useState<File | null>(null);
-  const [educationFiles, setEducationFiles] = useState<File[]>([]);
+const DocumentApply: React.FC<DocumentApplyProps> = ({
+  passportFile,
+  idFile,
+  educationFiles,
+  setEducationFiles,
+  setPassportFile,
+  setIdFile,
+}) => {
   const [showPassportImage, setShowPassportImage] = useState(false);
   const [showIDImage, setShowIDImage] = useState(false);
   const [showEducationImages, setShowEducationImages] = useState(false);
@@ -41,7 +53,7 @@ const DocumentApply = () => {
 
   // Handler for Educational Background upload (multiple files)
   const onDropEducation = useCallback((acceptedFiles: File[]) => {
-    setEducationFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+    setEducationFiles((prevFiles: File[]) => [...prevFiles, ...acceptedFiles]);
     setShowEducationImages(false);
   }, []);
 
@@ -266,12 +278,12 @@ const DocumentApply = () => {
                 }}
                 className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
               >
-                Replace ID Photo
+                Replace Birth Certificate Photo
               </button>
             </div>
           )
         ) : (
-          <p>+ Proof of ID Photo</p>
+          <p>+ Birth Certificate Photo</p>
         )}
       </div>
       {/* Educational Background Dropzone (multiple files) */}
