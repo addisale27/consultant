@@ -2,14 +2,15 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { FaTrash } from "react-icons/fa"; // React Icons for the trash icon
 
 const DocumentApply = () => {
   const [passportFile, setPassportFile] = useState<File | null>(null);
   const [idFile, setIdFile] = useState<File | null>(null);
   const [educationFiles, setEducationFiles] = useState<File[]>([]);
-  const [showPassportImage, setShowPassportImage] = useState(false); // To toggle passport preview
-  const [showIDImage, setShowIDImage] = useState(false); // To toggle ID preview
-  const [showEducationImages, setShowEducationImages] = useState(false); // To toggle education images
+  const [showPassportImage, setShowPassportImage] = useState(false);
+  const [showIDImage, setShowIDImage] = useState(false);
+  const [showEducationImages, setShowEducationImages] = useState(false);
 
   // Cleanup URLs for previews
   useEffect(() => {
@@ -25,7 +26,7 @@ const DocumentApply = () => {
   // Handler for Passport Photo upload
   const onDropPassport = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
-      setPassportFile(acceptedFiles[0]); // Only handle one file
+      setPassportFile(acceptedFiles[0]);
       setShowPassportImage(false); // Initially show the "Preview" text
     }
   }, []);
@@ -33,15 +34,15 @@ const DocumentApply = () => {
   // Handler for Proof of ID Photo upload
   const onDropID = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
-      setIdFile(acceptedFiles[0]); // Only handle one file
-      setShowIDImage(false); // Initially show the "Preview" text
+      setIdFile(acceptedFiles[0]);
+      setShowIDImage(false);
     }
   }, []);
 
   // Handler for Educational Background upload (multiple files)
   const onDropEducation = useCallback((acceptedFiles: File[]) => {
-    setEducationFiles((prevFiles) => [...prevFiles, ...acceptedFiles]); // Append new files
-    setShowEducationImages(false); // Initially show the "Preview" text
+    setEducationFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+    setShowEducationImages(false);
   }, []);
 
   // Dropzone for Passport Photo
@@ -49,10 +50,11 @@ const DocumentApply = () => {
     getRootProps: getRootPropsPassport,
     getInputProps: getInputPropsPassport,
     isDragActive: isDragActivePassport,
+    open: openPassportDialog, // Open file dialog manually
   } = useDropzone({
     onDrop: onDropPassport,
     accept: { "image/*": [] }, // Accept all image types
-    // Only allow one file
+    multiple: false, // Only allow one file
   });
 
   // Dropzone for Proof of ID Photo
@@ -60,10 +62,11 @@ const DocumentApply = () => {
     getRootProps: getRootPropsID,
     getInputProps: getInputPropsID,
     isDragActive: isDragActiveID,
+    open: openIDDialog,
   } = useDropzone({
     onDrop: onDropID,
-    accept: { "image/*": [] }, // Accept all image types
-    // Only allow one file
+    accept: { "image/*": [] },
+    multiple: false,
   });
 
   // Dropzone for Educational Background (multiple files)
@@ -71,42 +74,99 @@ const DocumentApply = () => {
     getRootProps: getRootPropsEducation,
     getInputProps: getInputPropsEducation,
     isDragActive: isDragActiveEducation,
+    open: openEducationDialog,
   } = useDropzone({
     onDrop: onDropEducation,
-    accept: { "image/*": [] }, // Accept all image types
-    // Allow multiple files
+    accept: { "image/*": [] },
+    multiple: true,
   });
 
-  // Helper function to render image previews
-  const renderImagePreview = (file: File | null, isVisible: boolean) => {
+  // Helper function to render image previews with trash icon
+  const renderImagePreview = (
+    file: File | null,
+    isVisible: boolean,
+    toggle: () => void,
+    deleteImage: () => void // Function to delete image
+  ) => {
     if (!file || !isVisible) return null;
     const previewUrl = URL.createObjectURL(file);
     return (
-      <Image
-        src={previewUrl}
-        alt="preview"
-        className="w-full h-full object-cover"
-        width={100}
-        height={100}
-      />
+      <div className="relative">
+        <div
+          className="cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent opening file dialog
+            toggle();
+          }}
+        >
+          <Image
+            src={previewUrl}
+            alt="preview"
+            className="w-full h-full object-cover"
+            width={100}
+            height={100}
+          />
+        </div>
+        <FaTrash
+          className="absolute top-1 right-1 text-red-500 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent opening file dialog
+            deleteImage();
+          }}
+        />
+      </div>
     );
   };
 
-  const renderMultipleImagePreviews = (files: File[], isVisible: boolean) => {
+  // Helper function to render multiple image previews (for educational background)
+  const renderMultipleImagePreviews = (
+    files: File[],
+    isVisible: boolean,
+    deleteImage: (index: number) => void // Function to delete image
+  ) => {
     if (!isVisible) return null;
     return files.map((file, index) => {
       const previewUrl = URL.createObjectURL(file);
       return (
-        <Image
-          key={index}
-          src={previewUrl}
-          alt={`education-file-${index}`}
-          className="w-24 h-24 object-cover rounded-lg mr-2"
-          width={100}
-          height={100}
-        />
+        <div key={index} className="relative">
+          <div
+            className="cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent opening file dialog
+              setShowEducationImages(!showEducationImages);
+            }}
+          >
+            <Image
+              src={previewUrl}
+              alt={`education-file-${index}`}
+              className="w-24 h-24 object-cover rounded-lg mr-2"
+              width={100}
+              height={100}
+            />
+          </div>
+          <FaTrash
+            className="absolute top-1 right-1 text-red-500 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent opening file dialog
+              deleteImage(index);
+            }}
+          />
+        </div>
       );
     });
+  };
+
+  // Handler to delete passport photo
+  const deletePassportPhoto = () => setPassportFile(null);
+
+  // Handler to delete ID photo
+  const deleteIDPhoto = () => setIdFile(null);
+
+  // Handler to delete education files
+  const deleteEducationFile = (index: number) => {
+    setEducationFiles((prevFiles) =>
+      prevFiles.filter((_, fileIndex) => fileIndex !== index)
+    );
   };
 
   return (
@@ -127,16 +187,38 @@ const DocumentApply = () => {
           position: "relative",
           overflow: "hidden",
         }}
-        onClick={() => setShowPassportImage(!showPassportImage)}
       >
         <input {...getInputPropsPassport()} className="hidden" />
         {passportFile ? (
           showPassportImage ? (
             <div className="w-full h-full">
-              {renderImagePreview(passportFile, showPassportImage)}
+              {renderImagePreview(
+                passportFile,
+                showPassportImage,
+                () => setShowPassportImage(false),
+                deletePassportPhoto
+              )}
             </div>
           ) : (
-            <p>Click to Preview Passport Photo</p>
+            <div className="flex flex-col items-center gap-4">
+              <p
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent opening file dialog
+                  setShowPassportImage(true);
+                }}
+              >
+                Click to Preview Passport Photo
+              </p>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent opening file dialog
+                  openPassportDialog();
+                }}
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
+              >
+                Replace Passport Photo
+              </button>
+            </div>
           )
         ) : (
           <p>+ Passport Photo</p>
@@ -155,22 +237,43 @@ const DocumentApply = () => {
           position: "relative",
           overflow: "hidden",
         }}
-        onClick={() => setShowIDImage(!showIDImage)}
       >
         <input {...getInputPropsID()} className="hidden" />
         {idFile ? (
           showIDImage ? (
             <div className="w-full h-full">
-              {renderImagePreview(idFile, showIDImage)}
+              {renderImagePreview(
+                idFile,
+                showIDImage,
+                () => setShowIDImage(false),
+                deleteIDPhoto
+              )}
             </div>
           ) : (
-            <p>Click to Preview ID Photo</p>
+            <div className="flex flex-col items-center gap-4">
+              <p
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent opening file dialog
+                  setShowIDImage(true);
+                }}
+              >
+                Click to Preview ID Photo
+              </p>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent opening file dialog
+                  openIDDialog();
+                }}
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
+              >
+                Replace ID Photo
+              </button>
+            </div>
           )
         ) : (
           <p>+ Proof of ID Photo</p>
         )}
       </div>
-
       {/* Educational Background Dropzone (multiple files) */}
       <div
         {...getRootPropsEducation()}
@@ -188,39 +291,43 @@ const DocumentApply = () => {
           position: "relative",
           overflow: "hidden",
         }}
-        onClick={() => setShowEducationImages(!showEducationImages)}
       >
         <input {...getInputPropsEducation()} className="hidden" />
         {educationFiles.length > 0 ? (
           showEducationImages ? (
             <div className="w-full flex flex-wrap">
-              {renderMultipleImagePreviews(educationFiles, showEducationImages)}
+              {renderMultipleImagePreviews(
+                educationFiles,
+                showEducationImages,
+                deleteEducationFile // Pass the delete function here
+              )}
             </div>
           ) : (
-            <p>Click to Preview Educational Images</p>
+            <div className="flex flex-col items-center gap-4">
+              <p
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent opening file dialog
+                  setShowEducationImages(true);
+                }}
+              >
+                Click to Preview Educational Images
+              </p>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent opening file dialog
+                  openEducationDialog();
+                }}
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
+              >
+                Add More Educational Images
+              </button>
+            </div>
           )
         ) : (
           <p>+ Educational Background Images</p>
         )}
       </div>
-
-      {/* Display the uploaded file details */}
-      {/* <div className="mt-4 space-y-2">
-        {passportFile && <p>Uploaded Passport Photo: {passportFile.name}</p>}
-        {idFile && <p>Uploaded Proof of ID Photo: {idFile.name}</p>}
-        {educationFiles.length > 0 && (
-          <div>
-            <p>Uploaded Educational Background Images:</p>
-            <ul>
-              {educationFiles.map((file, index) => (
-                <li key={index}>{file.name}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 };
-
 export default DocumentApply;
