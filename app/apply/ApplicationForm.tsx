@@ -7,6 +7,7 @@ import Input from "../components/Inputs/Input";
 import TextArea from "../components/Inputs/TextArea";
 import Button from "../components/Button";
 import { FaPlay } from "react-icons/fa";
+import DocumentApply from "./DocumentApply";
 
 const ApplicationForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -94,8 +95,6 @@ const ApplicationForm = () => {
             type="text"
             required
           />
-        </div>
-        <div className="flex flex-col gap-4 w-full md:w-1/2">
           <Input
             id="phone"
             label="Phone Number"
@@ -123,6 +122,10 @@ const ApplicationForm = () => {
             type="email"
             required
           />
+        </div>
+        <div className="flex flex-col gap-4 w-full md:w-1/2">
+          <DocumentApply />
+
           <TextArea
             id="message"
             label="Message"
