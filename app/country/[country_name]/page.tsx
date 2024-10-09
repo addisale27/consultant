@@ -1,8 +1,6 @@
 import { countryForJob } from "@/utils/countryDetails";
 import CountryFlag from "./CountryFlag";
 import Container from "@/app/components/Container";
-import { jobTypes } from "@/utils/jobTypes";
-import JobTypeCard from "@/app/components/jobType/JobTypeCard";
 
 interface IPrams {
   country_name?: string;
