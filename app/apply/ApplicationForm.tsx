@@ -115,6 +115,7 @@ const ApplicationForm = () => {
   }, [isFormSubmited]);
 
   const onsubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log(data);
     setIsLoading(true);
     toast("Submitting your application. please wait...");
     if (!passportFile || !idFile || educationFiles.length === 0) {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 import MenuItem from "./MenuItem";
 import BackDrop from "./BackDrop";
+import { useRouter } from "next/navigation";
 
 export type Scholarship = {
   id: number;
@@ -29,6 +30,7 @@ const Destination: React.FC<DestinationProps> = ({
   const toggleOpen = () => {
     setIsOpen((prev) => !prev);
   };
+  const router = useRouter();
   console.log(scholarshipsDestinations);
   return (
     <>
@@ -43,7 +45,13 @@ const Destination: React.FC<DestinationProps> = ({
         {isOpen && (
           <div className="absolute rounded-md shadow-md w-[200px] bg-white overflow-hidden left-0 top-12 text-sm cursor-pointer flex flex-col">
             {scholarshipsDestinations.map((destination) => (
-              <div key={destination} className="flex flex-col justify-center">
+              <div
+                key={destination}
+                className="flex flex-col justify-center"
+                onClick={() => {
+                  router.push(`/country/${destination}`);
+                }}
+              >
                 <Link href={`/${destination}`}>
                   <MenuItem onClick={toggleOpen}>{`${destination}`}</MenuItem>
                 </Link>
