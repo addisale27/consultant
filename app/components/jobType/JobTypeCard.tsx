@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 interface JobTypeCardProps {
   jobName: string;
@@ -6,18 +10,31 @@ interface JobTypeCardProps {
 }
 
 const JobTypeCard: React.FC<JobTypeCardProps> = ({ jobName, imageUrl }) => {
+  const router = useRouter();
   return (
-    <div className="border rounded-lg shadow-lg overflow-hidden">
-      <div className="relative h-48 w-full">
+    <div className="">
+      <div className="border rounded-md hover:scale-105 transition">
         <Image
           src={imageUrl}
           alt={`${jobName} image`}
-          fill
-          className="object-cover"
+          width={300}
+          height={300}
+          className="object-cover relative"
         />
-      </div>
-      <div className="p-4">
-        <h2 className="text-xl font-bold">{jobName}</h2>
+
+        <div className="p-4 h-1/4 flex flex-col justify-center">
+          <h2 className="text-xl font-bold text-gray-800 text-center">
+            {jobName}
+          </h2>
+          <div className="mt-2 flex justify-center">
+            <Button
+              label="Apply Now"
+              onClick={() => {
+                router.push("/apply");
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

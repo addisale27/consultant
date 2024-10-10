@@ -1,6 +1,8 @@
 import { countryForJob } from "@/utils/countryDetails";
 import CountryFlag from "./CountryFlag";
 import Container from "@/app/components/Container";
+import JobTypeSwiper from "@/app/components/jobType/JobTypeSwiper";
+import { jobTypes } from "@/utils/jobTypes";
 
 interface IPrams {
   country_name?: string;
@@ -25,6 +27,9 @@ const Country = ({ params }: { params: IPrams }) => {
             </div>
             <div>{countryForJob.introduction}</div>
           </div>
+        </div>
+        <div>
+          <JobTypeSwiper jobType={jobTypes} countryName={countryForJob.name} />
         </div>
       </Container>
     </div>

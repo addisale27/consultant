@@ -6,6 +6,7 @@ const nextConfig = {
       "via.placeholder.com",
       "firebasestorage.googleapis.com",
       "example.com",
+      "media.istockphoto.com",
     ],
   },
 };
