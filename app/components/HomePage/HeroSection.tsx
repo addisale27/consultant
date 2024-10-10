@@ -3,8 +3,10 @@
 import Image from "next/image";
 import heroimage from "../../assets/herosectionbg.jpg";
 import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
+  const router = useRouter();
   return (
     <div className="relative bg-gray-900 overflow-hidden ">
       {/* Background Image */}
@@ -27,13 +29,6 @@ const HeroSection = () => {
             selection.
           </p>
 
-          {/* <p className="text-md mb-4 px-12">
-            At [Your Consultancy Name], we specialize in helping students
-            navigate the complexities of the educational landscape. Our team of
-            experienced consultants provides personalized support, ensuring you
-            find the best opportunities tailored to your aspirations.
-          </p> */}
-
           <h2 className="text-xl font-semibold mb-2">Why Choose Us?</h2>
           <ul className="list-disc list-inside mb-4 px-12">
             <li>Tailored consulting sessions to meet your unique needs.</li>
@@ -43,7 +38,12 @@ const HeroSection = () => {
           </ul>
 
           <div className="max-w-[300px] flex justify-center items-center">
-            <Button onClick={() => {}} label="Explore More" />
+            <Button
+              onClick={() => {
+                router.push("/ExploreMore");
+              }}
+              label="Explore More"
+            />
           </div>
         </div>
       </div>
