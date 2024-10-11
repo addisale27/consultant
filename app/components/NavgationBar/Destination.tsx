@@ -31,16 +31,18 @@ const Destination: React.FC<DestinationProps> = ({
     setIsOpen((prev) => !prev);
   };
   const router = useRouter();
-  console.log(scholarshipsDestinations);
+
   return (
     <>
-      <div className="relative z-30">
+      <div className="relative z-30 opacity-1">
         <div
           onClick={toggleOpen}
           className="flex items-center border-[1px] border-slate-400 gap-1 rounded-full cursor-pointer hover:shadow-md transition text-slate-700 p-2"
         >
-          <span>Destination</span>
-          <AiFillCaretDown />
+          <span className="text-white">Destination</span>
+          <span className="text-white">
+            <AiFillCaretDown />
+          </span>
         </div>
         {isOpen && (
           <div className="absolute rounded-md shadow-md w-[200px] bg-white overflow-hidden left-0 top-12 text-sm cursor-pointer flex flex-col">

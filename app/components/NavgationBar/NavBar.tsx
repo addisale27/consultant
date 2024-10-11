@@ -5,7 +5,11 @@ import { scholarship } from "@/utils/scholarship";
 import UserMenu from "./UserMenu";
 import HamburgurMenu from "./HamburgurMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import logo from "../../assets/logo.jpg";
+import Image from "next/image";
+import { Redressed } from "next/font/google";
 
+const redressed = Redressed({ subsets: ["latin"], weight: "400" });
 const NavBar = async () => {
   const scholarshipsDestinations = Array.from(
     new Set(scholarship.map((item) => item.nation))
@@ -13,14 +17,27 @@ const NavBar = async () => {
   const currentUser = await getCurrentUser();
 
   return (
-    <div className="sticky top-0 w-full bg-slate-200 z-30 shadow-sm">
-      <div className="border-b-[1px] py-4">
+    <div className="sticky top-0 w-full  z-30 shadow-sm font-semibold">
+      <div className=" bg-blue-700 border-b-[1px] py-4">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
             <div>
-              <Link href="/">logo</Link>
+              <Link href="/">
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={logo}
+                    alt="logo"
+                    className="w-[50px] h-[50px] rounded-full"
+                  />
+                  <span
+                    className={`${redressed.className} font-bold text-2xl text-white`}
+                  >
+                    NAMEOFTHECOM.
+                  </span>
+                </div>
+              </Link>
             </div>
-            <div className="">search</div>
+            <div className="text-white">search</div>
             <div className="md:hidden block">
               <HamburgurMenu
                 nations={scholarshipsDestinations}
@@ -32,13 +49,13 @@ const NavBar = async () => {
                 <Destination
                   scholarshipsDestinations={scholarshipsDestinations}
                 />
-                <div>
+                <div className="text-white">
                   <Link href="/apply">Apply Now </Link>
                 </div>
-                <div>
+                <div className="text-white">
                   <Link href="/aboutUs">About Us</Link>
                 </div>
-                <div>
+                <div className="text-white">
                   <Link href="/contactUs">Contact Us</Link>
                 </div>
                 <UserMenu currentUser={currentUser} />

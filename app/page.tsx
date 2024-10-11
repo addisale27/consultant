@@ -7,6 +7,7 @@ import Container from "./components/Container";
 import Testimonial from "./components/HomePage/Testimonial";
 import FAQS from "./components/HomePage/FAQS";
 import DynamicHeroSection from "./components/HomePage/DynamicHeroSection";
+import CountryList from "./components/HomePage/CountryList";
 
 const Home = () => {
   const ourServices = services;
@@ -23,6 +24,15 @@ const Home = () => {
           <DynamicHeroSection />
         </div>
       </div>
+      <div>
+        <Container>
+          <div>
+            <CountryList />
+          </div>
+        </Container>
+      </div>
+
+      {/* <span>I am gonna edit the page below this you can use one container component for all of them no need to call many times i think </span> */}
 
       <div className="p-8">
         <Container>

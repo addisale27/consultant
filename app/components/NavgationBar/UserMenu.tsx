@@ -43,7 +43,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         onClick={toggleOpen}
       >
         <Avatar src={currentUser?.image} />
-        <AiFillCaretDown />
+        <span className="text-white">
+          <AiFillCaretDown />
+        </span>
       </div>
       {isOpen && (
         <div className="absolute rounded-md shadow-md w-[170px] bg-white overflow-hidden right-0 top-12 text-sm cursor-pointer flex flex-col z-50">

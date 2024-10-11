@@ -24,7 +24,7 @@ const HeroSection = () => {
         <div className={` flex flex-col flex-1 max-w-[700px]`}>
           {/* Animated Heading */}
           <motion.div
-            variants={fadeIn("right", 0.02)}
+            variants={fadeIn("down", 0.07)}
             initial="hidden"
             whileInView="show"
             viewport={{ once: false, amount: 0.7 }}
@@ -36,7 +36,7 @@ const HeroSection = () => {
 
           {/* Animated Subheading */}
           <motion.div
-            variants={fadeIn("left", 0.02)}
+            variants={fadeIn("up", 0.07)}
             initial="hidden"
             whileInView="show"
             viewport={{ once: false, amount: 0.7 }}
@@ -48,7 +48,7 @@ const HeroSection = () => {
 
           {/* Animated Button */}
           <motion.div
-            variants={fadeIn("up", 0.02)}
+            variants={fadeIn("up", 0.07)}
             initial="hidden"
             whileInView="show"
             viewport={{ once: false, amount: 0.7 }}
