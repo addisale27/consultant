@@ -7,6 +7,7 @@ const nextConfig = {
       "firebasestorage.googleapis.com",
       "example.com",
       "media.istockphoto.com",
+      "www.planstudyabroad.com",
     ],
   },
 };
