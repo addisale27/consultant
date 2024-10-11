@@ -1,5 +1,5 @@
 "use client";
-
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
@@ -7,59 +7,53 @@ import "swiper/css"; // Import core Swiper styles
 import "swiper/css/navigation"; // Import Navigation styles
 import Button from "../Button";
 import { useRouter } from "next/navigation";
+import { fadeIn } from "@/utils/variants";
+const slides = [
+  {
+    id: 1,
+    image: "https://www.planstudyabroad.com/images/banner/banner-new3.webp",
+    title: "Unlock Your Educational Future With Us!",
+    description:
+      "Expert guidance for scholarship applications and university selection, tailored to your academic journey.",
+  },
+  {
+    id: 2,
+    image: "https://www.planstudyabroad.com/images/banner/banner-new8.webp",
+    title: "Achieve Your Career Goals with Expert Job Consulting",
+    description:
+      "Personalized job consulting to help you navigate the employment market and land your dream job.",
+  },
+  {
+    id: 3,
+    image: "https://www.planstudyabroad.com/images/banner/banner-new4.webp",
+    title: "Discover Global Opportunities in Education and Careers",
+    description:
+      "Whether you're aiming for higher education abroad or exploring job prospects, we provide the support you need.",
+  },
+  {
+    id: 4,
+    image: "https://www.planstudyabroad.com/images/banner/banner-new7.webp",
+    title: "Scholarship Success Starts Here",
+    description:
+      "We help you identify and apply for scholarships to ease the financial burden of your education.",
+  },
+  {
+    id: 5,
+    image: "https://www.planstudyabroad.com/images/banner/banner-new2.webp",
+    title: "Step Up in Your Career",
+    description:
+      "From resume building to interview preparation, we guide you through every step of your job search.",
+  },
+  {
+    id: 6,
+    image: "https://www.planstudyabroad.com/images/banner/banner-new4.webp",
+    title: "Your Future Awaits - Let's Build It Together",
+    description:
+      "With our expertise, you can confidently pursue both educational and job opportunities worldwide.",
+  },
+];
 
 const DynamicHeroSection = () => {
-  const slides = [
-    {
-      id: 1,
-      image: "https://www.planstudyabroad.com/images/banner/banner-new3.webp",
-      title: "Unlock Your Educational Future With Us!",
-      description:
-        "Expert guidance for scholarship applications and university selection, tailored to your academic journey.",
-      type: "education",
-    },
-    {
-      id: 2,
-      image: "https://www.planstudyabroad.com/images/banner/banner-new2.webp",
-      title: "Achieve Your Career Goals with Expert Job Consulting",
-      description:
-        "Personalized job consulting to help you navigate the employment market and land your dream job.",
-      type: "job",
-    },
-    {
-      id: 3,
-      image: "https://www.planstudyabroad.com/images/banner/banner-new4.webp",
-      title: "Discover Global Opportunities in Education and Careers",
-      description:
-        "Whether you're aiming for higher education abroad or exploring job prospects, we provide the support you need.",
-      type: "both",
-    },
-    {
-      id: 4,
-      image: "https://www.planstudyabroad.com/images/banner/banner-new7.webp",
-      title: "Scholarship Success Starts Here",
-      description:
-        "We help you identify and apply for scholarships to ease the financial burden of your education.",
-      type: "education",
-    },
-    {
-      id: 5,
-      image: "https://www.planstudyabroad.com/images/banner/banner-new8.webp",
-      title: "Step Up in Your Career",
-      description:
-        "From resume building to interview preparation, we guide you through every step of your job search.",
-      type: "job",
-    },
-    {
-      id: 6,
-      image: "https://www.planstudyabroad.com/images/banner/banner-new4.webp",
-      title: "Your Future Awaits - Let's Build It Together",
-      description:
-        "With our expertise, you can confidently pursue both educational and job opportunities worldwide.",
-      type: "both",
-    },
-  ];
-
   const router = useRouter();
 
   return (
@@ -114,20 +108,54 @@ const DynamicHeroSection = () => {
               <div>
                 <Image src={slide.image} fill alt={slide.title} />
               </div>
-              <div className="absolute inset-0 flex flex-col justify-center items-start text-center max-w-[600px] pl-3 py-2">
-                <h1 className="font-bold  text-3xl text-gray-600">
-                  {slide.title}
-                </h1>
-                <p className="mt-4 text-md text-blue-700 font-semibold">
-                  {slide.description}
-                </p>
-                <div className="max-w-[250px] mx-auto my-5">
-                  <Button
-                    label="Explore More"
-                    onClick={() => {
-                      router.push("/ExploreMore");
-                    }}
-                  />
+              <div className="absolute inset-0 flex flex-col justify-center items-start  max-w-[500px] pl-4 xl:pl-8 2xl:pl-12 py-2">
+                <motion.div
+                  variants={fadeIn("left", 0.05)}
+                  initial="hidden"
+                  whileInView={"show"}
+                  viewport={{ once: false, amount: 0.7 }}
+                >
+                  <h1 className="font-bold  text-3xl text-gray-600">
+                    {slide.title}
+                  </h1>
+                </motion.div>
+                <motion.div
+                  variants={fadeIn("right", 0.05)}
+                  initial="hidden"
+                  whileInView={"show"}
+                  viewport={{ once: false, amount: 0.7 }}
+                >
+                  <p className="mt-4 text-md text-blue-700 font-semibold max-w-[450px]">
+                    {slide.description}
+                  </p>
+                </motion.div>
+                <div className="w-full my-5 flex items-center gap-4 justify-center">
+                  <motion.div
+                    variants={fadeIn("right", 0.05)}
+                    initial="hidden"
+                    whileInView={"show"}
+                    viewport={{ once: false, amount: 0.7 }}
+                  >
+                    <Button
+                      label="Explore More"
+                      onClick={() => {
+                        router.push("/ExploreMore");
+                      }}
+                    />
+                  </motion.div>
+                  <motion.div
+                    variants={fadeIn("left", 0.05)}
+                    initial="hidden"
+                    whileInView={"show"}
+                    viewport={{ once: false, amount: 0.7 }}
+                  >
+                    <Button
+                      label="Apply Now"
+                      onClick={() => {
+                        router.push("/apply");
+                      }}
+                    />
+                  </motion.div>
                 </div>
               </div>
             </div>
