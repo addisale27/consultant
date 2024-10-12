@@ -13,7 +13,7 @@ const Home = () => {
   const ourServices = services;
   return (
     <div className="">
-      <div className="mb-7">
+      <div className="">
         {/* Show HeroSection only on screens smaller than 'md' */}
         <div className="md:hidden">
           <HeroSection />
@@ -24,9 +24,9 @@ const Home = () => {
           <DynamicHeroSection />
         </div>
       </div>
-      <div>
+      <div className="bg-slate-200 p-6">
         <Container>
-          <div>
+          <div className=" my-11 md:my-[100px] xl:my-[120px]">
             <CountryList />
           </div>
         </Container>
