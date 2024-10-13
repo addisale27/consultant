@@ -51,7 +51,7 @@ const CountryList = () => {
         variants={fadeIn("up", 0.05)}
         initial="hidden"
         whileInView={"show"}
-        viewport={{ once: false, amount: 0.9 }}
+        viewport={{ once: false, amount: 0.5 }}
         className="flex justify-center items-center gap-4 flex-col p-5"
       >
         <h1 className="font-bold text-gray-700 text-2xl md:text-4xl xl:text-5xl text-center">

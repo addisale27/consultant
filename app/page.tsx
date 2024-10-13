@@ -8,6 +8,7 @@ import Testimonial from "./components/HomePage/Testimonial";
 import FAQS from "./components/HomePage/FAQS";
 import DynamicHeroSection from "./components/HomePage/DynamicHeroSection";
 import CountryList from "./components/HomePage/CountryList";
+import SubBanner from "./components/HomePage/SubBanner";
 
 const Home = () => {
   const ourServices = services;
@@ -26,14 +27,16 @@ const Home = () => {
       </div>
       <div className="bg-slate-200 p-6">
         <Container>
-          <div className=" my-11 md:my-[100px] xl:my-[120px]">
+          <div className=" mt-11 md:mt-[100px] xl:mt-[120px] mb-7">
             <CountryList />
           </div>
         </Container>
       </div>
 
       {/* <span>I am gonna edit the page below this you can use one container component for all of them no need to call many times i think </span> */}
-
+      <div>
+        <SubBanner />
+      </div>
       <div className="p-8">
         <Container>
           <div className="flex flex-wrap justify-center gap-4 mt-7">
