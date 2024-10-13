@@ -1,11 +1,7 @@
 import Image from "next/image";
 import InfoBox from "./InfoBox";
-import {
-  FaRegFileAlt,
-  FaCheck,
-  FaUser,
-  FaQuestionCircle,
-} from "react-icons/fa";
+import { FaBookOpen, FaPaperPlane, FaBriefcase } from "react-icons/fa";
+import Link from "next/link";
 
 const SubBanner = () => {
   return (
@@ -24,20 +20,20 @@ const SubBanner = () => {
         </div>
 
         {/* Centered absolute image */}
-        <div className="absolute top-2 left-2 right-2 bottom-2  sm:p-4">
+        <div className="absolute top-2 left-2 right-2 bottom-2 sm:p-4">
           <Image
             src="https://www.planstudyabroad.com/images/study-abroad-consultant.webp"
             width={800}
             height={800}
             alt="overlay image"
-            className="object-contain -w-full h-full"
+            className="object-contain w-full h-full"
             priority
           />
         </div>
       </div>
 
       {/* Cards section */}
-      <div className="w-full flex flex-col  lg:flex-1">
+      <div className="w-full flex flex-col lg:flex-1">
         <h1 className="text-xl md:text-2xl font-bold text-black flex flex-col md:text-left">
           <span>Choose a suitable option</span>
           <span>that suits your requirement</span>
@@ -45,31 +41,43 @@ const SubBanner = () => {
 
         {/* Section 1 */}
         <div className="w-full flex flex-col mt-4">
-          <div className="flex items-center gap-2">
-            <span className="whitespace-nowrap">Self Service:</span>
-            <hr className="flex-grow border-t border-white" />
+          <div className="flex items-center gap-2 w-[90%] md:w-[75%]">
+            <span className="whitespace-nowrap">Education Service:</span>
+            <hr className="w-full border-t border-white" />
           </div>
-          <div className="flex  gap-4 mt-4 ">
-            <InfoBox
-              label="3 Easy steps to find a course"
-              icon={FaRegFileAlt}
-            />
-            <InfoBox label="I know the course, let me apply" icon={FaCheck} />
+          <div className=" scroll-smooth flex gap-4 mt-4">
+            <a href="#steps">
+              <div>
+                <InfoBox label="3 steps to choose a course" icon={FaBookOpen} />
+              </div>
+            </a>
+            <Link href={"/apply"}>
+              <InfoBox
+                label="I want to apply for a course"
+                icon={FaPaperPlane}
+              />
+            </Link>
           </div>
         </div>
 
         {/* Section 2 */}
-        <div className="w-full flex flex-col mt-4 ">
-          <div className="flex items-center gap-2 justify-center">
-            <span className="whitespace-nowrap">Need Assistance:</span>
-            <hr className="flex-grow border-t border-white" />
+        <div className="w-full flex flex-col mt-4">
+          <div className="flex items-center gap-2 w-[90%] md:w-[75%]">
+            <span className="whitespace-nowrap">Job Application:</span>
+            <hr className="w-full border-t border-white" />
           </div>
-          <div className="flex gap-4 mt-4 ">
-            <InfoBox
-              label="Help me choose a course and apply"
-              icon={FaQuestionCircle}
-            />
-            <InfoBox label="I am a guardian, contact me." icon={FaUser} />
+          <div className="flex gap-4 mt-4">
+            <a href="#steps">
+              <div>
+                <InfoBox
+                  label="3 Easy steps to find a job"
+                  icon={FaBriefcase}
+                />
+              </div>
+            </a>
+            <Link href={"/apply"}>
+              <InfoBox label="I want to apply for a job" icon={FaPaperPlane} />
+            </Link>
           </div>
         </div>
       </div>

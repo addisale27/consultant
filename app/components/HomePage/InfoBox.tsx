@@ -7,7 +7,7 @@ interface InfoBoxProps {
 
 const InfoBox: React.FC<InfoBoxProps> = ({ icon: Icon, label }) => {
   return (
-    <div className="group w-64 ">
+    <div className="group  ">
       {" "}
       {/* Fixed width for consistency */}
       <div className="flex flex-col items-center gap-3 p-6 bg-gradient-to-r from-blue-700 to-sky-500 rounded-xl shadow-lg transform transition duration-300 hover:shadow-2xl hover:from-orange-500 hover:to-red-500">

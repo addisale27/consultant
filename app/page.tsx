@@ -1,19 +1,20 @@
 "use client";
 
 import HeroSection from "./components/HomePage/HeroSection";
-import ServiceCard from "./components/HomePage/ServiceCard";
-import { services } from "../utils/ServiceOverview";
+// import ServiceCard from "./components/HomePage/ServiceCard";
+//import { services } from "../utils/ServiceOverview";
 import Container from "./components/Container";
 import Testimonial from "./components/HomePage/Testimonial";
-import FAQS from "./components/HomePage/FAQS";
+//import FAQS from "./components/HomePage/FAQS";
 import DynamicHeroSection from "./components/HomePage/DynamicHeroSection";
 import CountryList from "./components/HomePage/CountryList";
 import SubBanner from "./components/HomePage/SubBanner";
+import HowItWorks from "./components/HomePage/HowItWorks";
 
 const Home = () => {
-  const ourServices = services;
+  //const ourServices = services;
   return (
-    <div className="">
+    <div className="flex flex-col ">
       <div className="">
         {/* Show HeroSection only on screens smaller than 'md' */}
         <div className="md:hidden">
@@ -37,7 +38,12 @@ const Home = () => {
       <div>
         <SubBanner />
       </div>
-      <div className="p-8">
+      <div className="mt-7">
+        <div>
+          <HowItWorks />
+        </div>
+      </div>
+      {/* <div className="p-8">
         <Container>
           <div className="flex flex-wrap justify-center gap-4 mt-7">
             {ourServices.map((service) => {
@@ -49,19 +55,19 @@ const Home = () => {
             })}
           </div>
         </Container>
-      </div>
+      </div> */}
 
-      <div className="mt-10 md:mt-[100px]">
+      <div className="mt-7 md:mt-[100px] bg-slate-200 ">
         <Container>
           <Testimonial />
         </Container>
       </div>
 
-      <div className="mt-10 md:mt-[100px]">
+      {/* <div className="mt-10 md:mt-[100px]">
         <Container>
           <FAQS />
         </Container>
-      </div>
+      </div> */}
     </div>
   );
 };

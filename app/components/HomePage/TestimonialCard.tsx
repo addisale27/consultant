@@ -16,7 +16,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimony }) => {
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="p-6">
         <FaQuoteRight className="text-gray-400 text-3xl mb-4" />
-        <p className="text-gray-600 italic mb-4 px-3">
+        <p className="text-gray-600 italic mb-4 px-3 max-w-64 overflow-y-auto">
           {testimony.testimonial}
         </p>
         <div className="flex flex-col items-end">
