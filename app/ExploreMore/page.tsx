@@ -1,5 +1,11 @@
+import ExploreHeroSection from "./HeroSection";
+
 const ExploreMore = () => {
-  return <div>Explore more</div>;
+  return (
+    <div>
+      <ExploreHeroSection />
+    </div>
+  );
 };
 
 export default ExploreMore;
