@@ -41,7 +41,7 @@ export default function RootLayout({
         />
         <div className="flex flex-col min-h-screen">
           <NavBar />
-          <main className="flex-grow w-full">{children}</main>
+          <main className="flex-grow w-full overflow-hidden">{children}</main>
           <Footer />
         </div>
       </body>
