@@ -106,7 +106,12 @@ const DynamicHeroSection = () => {
           <SwiperSlide key={slide.id}>
             <div className="min-h-[50vh] relative">
               <div>
-                <Image src={slide.image} fill alt={slide.title} />
+                <Image
+                  src={slide.image}
+                  fill
+                  alt={slide.title}
+                  className="w-full "
+                />
               </div>
               <div className="absolute inset-0 flex flex-col justify-center items-start  max-w-[500px] pl-4 xl:pl-8 2xl:pl-12 py-2">
                 <motion.div

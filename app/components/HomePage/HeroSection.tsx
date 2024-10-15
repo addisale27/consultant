@@ -16,7 +16,7 @@ const HeroSection = () => {
           src={heroimage}
           fill
           alt="heroimage"
-          className="object-cover brightness-50"
+          className="object-cover brightness-50 w-full"
         />
       </div>
 
