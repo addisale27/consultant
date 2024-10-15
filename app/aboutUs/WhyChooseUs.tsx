@@ -3,13 +3,13 @@ import { FaAward } from "react-icons/fa";
 const WhyChooseUs = () => {
   return (
     <div className="flex justify-center items-center  ">
-      <section className="bg-white rounded-lg shadow-lg p-8 max-w-3xl mx-auto">
+      <section className=" p-8 max-w-3xl mx-auto">
         <div className="flex items-center gap-2">
-          <div className="bg-blue-700 w-[60px] h-[60px] rounded-full flex items-center justify-center mr-4 ">
-            <FaAward size={28} className="text-white" />
+          <div className="bg-blue-700 w-[40px] h-[40px] rounded-full flex items-center justify-center mr-4 ">
+            <FaAward size={24} className="text-white" />
           </div>
           <h2 className="text-3xl font-bold text-gray-800 text-center">
-            Why Choose Us?
+            Why Us?
           </h2>
         </div>
 
@@ -20,11 +20,11 @@ const WhyChooseUs = () => {
           student gets the attention they deserve.
         </p>
 
-        <div className="mt-6 text-center">
+        {/* <div className="mt-6 text-center">
           <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition duration-300">
             Learn More
           </button>
-        </div>
+        </div> */}
       </section>
     </div>
   );
