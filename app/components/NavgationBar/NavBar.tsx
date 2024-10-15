@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Container from "../Container";
-import Destination from "./Destination";
+//import Destination from "./Destination";
 import { scholarship } from "@/utils/scholarship";
 import UserMenu from "./UserMenu";
 import HamburgurMenu from "./HamburgurMenu";
@@ -46,9 +46,9 @@ const NavBar = async () => {
             </div>
             <div className="items-center gap-4 hidden md:flex">
               <div className="flex gap-8 md:gap-12 items-center">
-                <Destination
+                {/* <Destination
                   scholarshipsDestinations={scholarshipsDestinations}
-                />
+                /> */}
                 <div className="text-white">
                   <Link href="/apply">Apply Now </Link>
                 </div>

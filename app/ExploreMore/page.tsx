@@ -1,4 +1,8 @@
+"use client";
+
 import Container from "../components/Container";
+import FAQS from "../components/HomePage/FAQS";
+import Benefits from "./Benefits";
 import ExploreHeroSection from "./HeroSection";
 import TextBanner from "./TextBanner";
 
@@ -7,7 +11,13 @@ const ExploreMore = () => {
     <div>
       <ExploreHeroSection />
       <Container>
-        <TextBanner />
+        <div>
+          <TextBanner />
+        </div>
+      </Container>
+      <Benefits />
+      <Container>
+        <FAQS />
       </Container>
     </div>
   );
