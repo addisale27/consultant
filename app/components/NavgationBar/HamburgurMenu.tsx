@@ -1,41 +1,33 @@
 "use client";
 import { useState } from "react";
-import {
-  AiFillCaretDown,
-  AiFillCaretRight,
-  AiOutlineMenu,
-} from "react-icons/ai";
+import { AiOutlineMenu } from "react-icons/ai";
 import BackDrop from "./BackDrop";
 import MenuItem from "./MenuItem";
-import Link from "next/link";
+//import Link from "next/link";
 import { CurrentUser } from "./UserMenu";
 import Avatar from "../Avatar";
 import { useRouter } from "next/navigation";
 
 interface HamburgurMenuProps {
-  nations: string[];
   currentUser: CurrentUser | null;
 }
 
-const HamburgurMenu: React.FC<HamburgurMenuProps> = ({
-  nations,
-  currentUser,
-}) => {
+const HamburgurMenu: React.FC<HamburgurMenuProps> = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDestinationOpen, setIsDestinationOpen] = useState(false);
+  // const [isDestinationOpen, setIsDestinationOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const toggleDestinationMenu = () => {
-    setIsDestinationOpen((prev) => !prev);
-  };
+  // const toggleDestinationMenu = () => {
+  //   setIsDestinationOpen((prev) => !prev);
+  // };
 
-  const handleTouchStart = (event: React.TouchEvent) => {
-    event.stopPropagation(); // Prevent event bubbling
-    toggleDestinationMenu(); // Toggle destination menu on touch start
-  };
+  // const handleTouchStart = (event: React.TouchEvent) => {
+  //   event.stopPropagation(); // Prevent event bubbling
+  //   toggleDestinationMenu(); // Toggle destination menu on touch start
+  // };
 
   const router = useRouter();
 
@@ -62,9 +54,9 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({
               )}
             </MenuItem>
 
-            <div className="relative z-40">
-              <div className="flex flex-col gap-1 cursor-pointer px-4 py-3 hover:bg-neutral-100 transition text-md font-normal">
-                <div
+            {/* <div className="relative z-40">
+              <div className="flex flex-col gap-1 cursor-pointer px-4 py-3 hover:bg-neutral-100 transition text-md font-normal"> */}
+            {/* <div
                   className="flex gap-1 items-center"
                   onTouchStart={handleTouchStart} // Use touch start
                   onTouchEnd={(e) => e.stopPropagation()} // Stop propagation on touch end
@@ -75,8 +67,8 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({
                   ) : (
                     <AiFillCaretRight />
                   )}
-                </div>
-                {isDestinationOpen && (
+                </div> */}
+            {/* {isDestinationOpen && (
                   <div className="px-4 cursor-pointer flex flex-col">
                     {nations.map((destination) => (
                       <Link
@@ -88,9 +80,9 @@ const HamburgurMenu: React.FC<HamburgurMenuProps> = ({
                       </Link>
                     ))}
                   </div>
-                )}
-              </div>
-            </div>
+                )} */}
+            {/* </div>
+            </div> */}
 
             <MenuItem
               onClick={() => {

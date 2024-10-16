@@ -16,11 +16,12 @@ const Testimonial = () => {
         <div className="relative">
           <div className="absolute top-1/2 -left-6 md:-left-12 transform -translate-y-1/2 z-10">
             <div
-              className="p-3 bg-orange-500 rounded-full hover:bg-blue-700 cursor-pointer"
+              className="ml-5 p-3 bg-orange-500 rounded-full hover:bg-blue-700 cursor-pointer"
               id="prev-btn"
             >
               <svg
-                className="w-5 h-5"
+                className="md:w-5 md:h-5 w-3
+                h-3"
                 fill="#fff"
                 viewBox="0 0 256 256"
                 xmlns="http://www.w3.org/2000/svg"
@@ -31,11 +32,11 @@ const Testimonial = () => {
           </div>
           <div className="absolute top-1/2 -right-6 md:-right-12 transform -translate-y-1/2 z-10">
             <div
-              className="p-3 bg-orange-500 rounded-full hover:bg-blue-700 cursor-pointer"
+              className=" mr-5 p-3 bg-orange-500 rounded-full hover:bg-blue-700 cursor-pointer"
               id="next-btn"
             >
               <svg
-                className="w-5 h-5"
+                className="md:w-5 md:h-5 w-3 h-3"
                 fill="#fff"
                 viewBox="0 0 256 256"
                 xmlns="http://www.w3.org/2000/svg"

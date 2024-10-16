@@ -57,7 +57,7 @@ const Home = () => {
         </Container>
       </div> */}
 
-      <div className="mt-7 md:mt-[100px] bg-slate-200 ">
+      <div className="mt-7 md:mt-[100px]  ">
         <Container>
           <Testimonial />
         </Container>

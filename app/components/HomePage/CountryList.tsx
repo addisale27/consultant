@@ -1,15 +1,15 @@
 "use client";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import { Autoplay, Navigation } from "swiper/modules";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { fadeIn } from "@/utils/variants";
+// import { motion } from "framer-motion";
+// import { fadeIn } from "@/utils/variants";
+
 const countries = [
   {
     id: 1,
-    name: "United States",
+    name: "US",
     image_url: "https://www.planstudyabroad.com/images/destination/usa.webp",
   },
   {
@@ -19,7 +19,7 @@ const countries = [
   },
   {
     id: 3,
-    name: "United Kingdom",
+    name: "UK",
     image_url:
       "https://www.planstudyabroad.com/images/destination/united-kingdom.webp",
   },
@@ -31,7 +31,7 @@ const countries = [
   },
   {
     id: 5,
-    name: "New Zealand",
+    name: "Germany",
     image_url: "https://www.planstudyabroad.com/images/destination/nz.webp",
   },
   {
@@ -45,15 +45,9 @@ const countries = [
 const CountryList = () => {
   const router = useRouter();
   return (
-    <div className="w-full flex flex-col  gap-4 md:gap-16">
+    <div className="w-full flex flex-col gap-4 md:gap-16">
       {/* Header Section */}
-      <motion.div
-        variants={fadeIn("up", 0.05)}
-        initial="hidden"
-        whileInView={"show"}
-        viewport={{ once: false, amount: 0.5 }}
-        className="flex justify-center items-center gap-4 flex-col p-5"
-      >
+      <div className="flex justify-center items-center gap-4 flex-col p-5">
         <h1 className="font-bold text-gray-700 text-2xl md:text-4xl xl:text-5xl text-center">
           Explore &amp; Choose the Best Opportunities in Education and Careers
           Worldwide.
@@ -62,18 +56,18 @@ const CountryList = () => {
           We provide the guidance you need to achieve your goals. Start your
           journey today and unlock your full potential!
         </p>
-      </motion.div>
+      </div>
 
       {/* Swiper Section */}
-      <div className="relative">
+      <div className="relative group">
         {/* Navigation Buttons */}
         <div className="absolute top-1/2 -left-6 md:-left-12 transform -translate-y-1/2 z-10">
           <div
-            className="p-3 bg-orange-500 rounded-full hover:bg-blue-700 cursor-pointer"
+            className=" ml-5 p-3  bg-orange-500 rounded-full hover:bg-blue-700 cursor-pointer"
             id="prev-btn"
           >
             <svg
-              className="w-5 h-5"
+              className=" w-3  h-3 md:w-5 md:h-5"
               fill="#fff"
               viewBox="0 0 256 256"
               xmlns="http://www.w3.org/2000/svg"
@@ -82,13 +76,13 @@ const CountryList = () => {
             </svg>
           </div>
         </div>
-        <div className="absolute top-1/2 -right-6 md:-right-12 transform -translate-y-1/2 z-10">
+        <div className=" absolute top-1/2 -right-6 md:-right-12 transform -translate-y-1/2 z-10">
           <div
-            className="p-3 bg-orange-500 rounded-full hover:bg-blue-700 cursor-pointer"
+            className=" mr-5 p-3 bg-orange-500 rounded-full hover:bg-blue-700 cursor-pointer"
             id="next-btn"
           >
             <svg
-              className="w-5 h-5"
+              className=" w-3  h-3 md:w-5 md:h-5"
               fill="#fff"
               viewBox="0 0 256 256"
               xmlns="http://www.w3.org/2000/svg"
@@ -139,15 +133,13 @@ const CountryList = () => {
                   <Image
                     src={country.image_url}
                     alt={country.name}
-                    width={200}
+                    width={300}
                     height={300}
-                    objectFit="cover" // Maintain aspect ratio and cover the area
-                    className="w-full h-full transition-transform duration-300 ease-in-out transform hover:scale-105" // Add transition and scale effect
+                    objectFit="cover"
+                    className="w-full h-[300px] sm:h-[400px] md:h-[400px] transition-transform duration-300 ease-in-out transform hover:scale-105"
                   />
 
-                  <div className="absolute bottom-3 left-4 right-4 bg-gradient-to-r from-orange-500 via-purple-500 to-red-500  font-semibold text-white text-xl p-3 text-center border-[1px] border-white">
-                    {" "}
-                    {/* Center the button text */}
+                  <div className="absolute bottom-3 left-4 right-4 bg-gradient-to-r from-orange-500 to-red-500 font-semibold text-white text-xl p-3 text-center border-[1px] border-white">
                     <button>Apply for {country.name}</button>
                   </div>
                 </div>

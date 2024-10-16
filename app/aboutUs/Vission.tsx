@@ -11,9 +11,10 @@ const VisionSection = () => {
           <h2 className="text-2xl font-bold text-gray-800">Our Vision</h2>
         </div>
         <p className="mt-6 text-gray-600 leading-relaxed">
-          We envision a future where every student has access to the guidance
-          they need to succeed in their academic journey, shaping a better world
-          through education.
+          We envision a future where every student and job seeker has access to
+          the guidance they need to succeed in their academic and professional
+          journeys, shaping a better world through education and career
+          opportunities.
         </p>
 
         {/* <div className="mt-4 flex justify-end">

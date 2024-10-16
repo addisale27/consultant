@@ -16,7 +16,8 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import firebaseApp from "@/libs/firebase";
-
+import { motion } from "framer-motion";
+import { fadeIn } from "@/utils/variants";
 // Define an interface for the uploaded images
 interface UploadedImage {
   image: string;
@@ -181,24 +182,43 @@ const ApplicationForm = () => {
 
   return (
     <>
-      <div className="flex items-center gap-4 p-5 justify-center">
-        <span className="bg-blue-600 w-[50px] h-[50px] md:w-[60px] md:h-[60px] flex justify-center items-center rounded-full shadow-lg transition-transform transform hover:scale-110">
+      <motion.div
+        variants={fadeIn("left", 0.05)}
+        initial="hidden"
+        whileInView={"show"}
+        viewport={{ once: false, amount: 0.7 }}
+        className="flex items-center gap-4 p-5 justify-center"
+      >
+        <span className="bg-blue-600 w-[50px] h-[50px] md:w-[60px] md:h-[60px]  justify-center items-center rounded-full shadow-lg transition-transform transform hover:scale-110 flex">
           <FaPlay size={24} className="text-white" />
         </span>
         <h1 className="text-3xl md:text-6xl font-bold text-center text-gray-800">
           Apply Now
         </h1>
-      </div>
-      <p className="p-5 text-sm md:text-base text-gray-700 text-center">
-        Welcome to the application process! We’re excited to help you achieve
-        your educational goals. Please complete the form below to provide us
-        with your personal details and needs. Our team will review your
-        application and reach out to discuss the next steps. Thank you for
-        choosing [Your Company Name]; we look forward to supporting you on your
-        educational journey!
-      </p>
+      </motion.div>
+      <motion.div
+        variants={fadeIn("right", 0.05)}
+        initial="hidden"
+        whileInView={"show"}
+        viewport={{ once: false, amount: 0.7 }}
+      >
+        <p className="p-5 text-sm md:text-base text-gray-700 text-center">
+          Welcome to the application process! We’re excited to help you achieve
+          your educational goals. Please complete the form below to provide us
+          with your personal details and needs. Our team will review your
+          application and reach out to discuss the next steps. Thank you for
+          choosing [Your Company Name]; we look forward to supporting you on
+          your educational journey!
+        </p>
+      </motion.div>
       <div className="flex flex-col md:flex-row gap-6 justify-center p-5">
-        <div className="flex flex-col gap-4 w-full md:w-1/2">
+        <motion.div
+          variants={fadeIn("down", 0.05)}
+          initial="hidden"
+          whileInView={"show"}
+          viewport={{ once: false, amount: 0.7 }}
+          className="flex flex-col gap-4 w-full md:w-1/2"
+        >
           <Input
             id="fullName"
             label="Full Name"
@@ -252,8 +272,14 @@ const ApplicationForm = () => {
             type="email"
             required
           />
-        </div>
-        <div className="flex flex-col gap-4 w-full md:w-1/2">
+        </motion.div>
+        <motion.div
+          variants={fadeIn("up", 0.05)}
+          initial="hidden"
+          whileInView={"show"}
+          viewport={{ once: false, amount: 0.7 }}
+          className="flex flex-col gap-4 w-full md:w-1/2"
+        >
           <DocumentApply
             passportFile={passportFile}
             idFile={idFile}
@@ -270,15 +296,21 @@ const ApplicationForm = () => {
             errors={errors}
             required
           />
-        </div>
+        </motion.div>
       </div>
-      <div className="max-w-[300px] mx-auto my-6">
+      <motion.div
+        variants={fadeIn("up", 0.05)}
+        initial="hidden"
+        whileInView={"show"}
+        viewport={{ once: false, amount: 0.7 }}
+        className="max-w-[300px] mx-auto my-6"
+      >
         <Button
           label={isLoading ? `Loading...` : `Submit`}
           onClick={handleSubmit(onsubmit)}
           disabled={isLoading}
         />
-      </div>
+      </motion.div>
     </>
   );
 };

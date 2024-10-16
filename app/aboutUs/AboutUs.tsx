@@ -9,6 +9,7 @@ import MeetOurTeam from "./MeetOurTeam";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { fadeIn } from "@/utils/variants";
+import WhatWeDo from "./WhatWeDo";
 
 const AboutUsComponent = () => {
   return (
@@ -19,7 +20,7 @@ const AboutUsComponent = () => {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center sm:text-left">
             About Us
           </h1>
-          <span className="bg-blue-700 w-[40px] h-[40px] rounded-full flex items-center justify-center">
+          <span className="bg-blue-700 w-[40px] h-[40px] rounded-full  items-center justify-center hidden md:flex ">
             <AiOutlineInfoCircle size={24} className="text-white" />
           </span>
         </div>
@@ -43,7 +44,7 @@ const AboutUsComponent = () => {
             viewport={{ once: false, amount: 0.5 }}
           >
             <Image
-              src="https://www.planstudyabroad.com/images/blog/discussing-video-course-detail.jpg"
+              src="https://www.planstudyabroad.com/images/canada/study-in-canada-Scholarship-and-Funding.jpg"
               alt="Mission"
               width={300}
               height={300}
@@ -61,7 +62,7 @@ const AboutUsComponent = () => {
             viewport={{ once: false, amount: 0.5 }}
           >
             <Image
-              src="https://www.planstudyabroad.com/images/blog/discussing-video-course-detail.jpg"
+              src="https://www.planstudyabroad.com/images/canada/Possibility-to-earn-money-while-studying.jpg"
               alt="Vision"
               width={300}
               height={300}
@@ -113,7 +114,7 @@ const AboutUsComponent = () => {
             viewport={{ once: false, amount: 0.5 }}
           >
             <Image
-              src="https://www.planstudyabroad.com/images/blog/discussing-video-course-detail.jpg"
+              src="https://www.planstudyabroad.com/images/usa/Scholarship-and-Funding.jpg"
               alt="Vision"
               width={300}
               height={300}
@@ -126,7 +127,7 @@ const AboutUsComponent = () => {
             whileInView="show"
             viewport={{ once: false, amount: 0.5 }}
           >
-            <VisionSection />
+            <WhatWeDo />
           </motion.div>
         </div>
 
@@ -147,7 +148,7 @@ const AboutUsComponent = () => {
             viewport={{ once: false, amount: 0.5 }}
           >
             <Image
-              src="https://www.planstudyabroad.com/images/blog/discussing-video-course-detail.jpg"
+              src="https://www.planstudyabroad.com/images/usa/Post-graduation-work-permit.jpg"
               alt="Why Choose Us"
               width={300}
               height={300}

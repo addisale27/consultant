@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "../Container";
 //import Destination from "./Destination";
-import { scholarship } from "@/utils/scholarship";
+//import { scholarship } from "@/utils/scholarship";
 import UserMenu from "./UserMenu";
 import HamburgurMenu from "./HamburgurMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
@@ -11,9 +11,9 @@ import { Redressed } from "next/font/google";
 
 const redressed = Redressed({ subsets: ["latin"], weight: "400" });
 const NavBar = async () => {
-  const scholarshipsDestinations = Array.from(
-    new Set(scholarship.map((item) => item.nation))
-  );
+  // const scholarshipsDestinations = Array.from(
+  //   new Set(scholarship.map((item) => item.nation))
+  // );
   const currentUser = await getCurrentUser();
 
   return (
@@ -29,20 +29,18 @@ const NavBar = async () => {
                     alt="logo"
                     className="w-[50px] h-[50px] rounded-full"
                   />
-                  <span
-                    className={`${redressed.className} font-bold text-2xl text-white`}
+                  <div
+                    className={`${redressed.className} font-bold text-1xl text-white flex flex-col`}
                   >
-                    NAMEOFTHECOM.
-                  </span>
+                    <span>NAMEOFTHECOM.</span>
+                    <span>CONSULTANCY</span>
+                  </div>
                 </div>
               </Link>
             </div>
-            <div className="text-white">search</div>
+            <div className="text-white hidden">search</div>
             <div className="md:hidden block">
-              <HamburgurMenu
-                nations={scholarshipsDestinations}
-                currentUser={currentUser}
-              />
+              <HamburgurMenu currentUser={currentUser} />
             </div>
             <div className="items-center gap-4 hidden md:flex">
               <div className="flex gap-8 md:gap-12 items-center">

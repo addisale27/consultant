@@ -13,8 +13,11 @@ const Sections = () => {
 
         <p className="mt-6 text-gray-600 leading-relaxed">
           At <span className="font-bold">[Your Company Name]</span>, our mission
-          is to empower students to achieve their full potential through
-          personalized educational consulting services.
+          is to empower students and professionals to achieve their full
+          potential through personalized educational and career consulting
+          services. We provide tailored guidance for those seeking scholarships,
+          educational programs, and international job opportunities, helping
+          them unlock a world of possibilities.
         </p>
 
         {/* <div className="mt-4 flex justify-end">

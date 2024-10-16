@@ -45,7 +45,7 @@ const SubBanner = () => {
             <span className="whitespace-nowrap">Education Service:</span>
             <hr className="w-full border-t border-white" />
           </div>
-          <div className=" scroll-smooth flex gap-4 mt-4">
+          <div className=" scroll-smooth grid grid-cols-2 gap-2 mt-4">
             <a href="#steps">
               <div>
                 <InfoBox label="3 steps to choose a course" icon={FaBookOpen} />
@@ -66,7 +66,7 @@ const SubBanner = () => {
             <span className="whitespace-nowrap">Job Application:</span>
             <hr className="w-full border-t border-white" />
           </div>
-          <div className="flex gap-4 mt-4">
+          <div className="grid grid-cols-2  gap-2 mt-4">
             <a href="#steps">
               <div>
                 <InfoBox
