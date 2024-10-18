@@ -19,13 +19,13 @@ const AdminNavIcon = () => {
   const navToggle = () => setIsOpen((prev) => !prev);
 
   return (
-    <div className="flex ">
+    <div className="flex relative">
       {/* Sidebar */}
       <div
         className={`${
-          isOpen ? " w-64 bg-cyan-400" : "w-20 bg-white"
+          isOpen ? "w-64 bg-gray-900 z-20 " : "w-20 bg-white"
         } transition-all duration-300 ease-in-out 
-        text-white flex flex-col  relative`}
+        text-white flex flex-col relative`}
       >
         <div className="flex-grow"></div>
 
@@ -37,7 +37,6 @@ const AdminNavIcon = () => {
                 label="Summary"
                 icon={MdDashboard}
                 selected={pathName === "/admin"}
-                // Added margin to create space
               />
             </Link>
 
@@ -46,7 +45,6 @@ const AdminNavIcon = () => {
                 label="Add Scholarship"
                 icon={MdLibraryAdd}
                 selected={pathName === "/admin/add-scholarship"}
-                // Added margin to create space
               />
             </Link>
 
@@ -55,21 +53,21 @@ const AdminNavIcon = () => {
                 label="Manage Scholarship"
                 icon={MdDns}
                 selected={pathName === "/admin/manage-scholarship"}
-                // Added margin to create space
               />
             </Link>
+
             <div className="mb-8">
               <Link href="/admin/manage-applications">
                 <AdminNavItem
                   label="Manage Applications"
                   icon={MdFormatListBulleted}
                   selected={pathName === "/admin/manage-applications"}
-                  // Added margin to create space
                 />
               </Link>
             </div>
           </div>
         )}
+
         {/* Toggle Icon */}
         <div
           className="mt-8 absolute bottom-4 right-4 cursor-pointer"
@@ -82,6 +80,8 @@ const AdminNavIcon = () => {
           )}
         </div>
       </div>
+
+      {/* BackDrop Component */}
     </div>
   );
 };

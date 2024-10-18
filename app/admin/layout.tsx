@@ -1,7 +1,7 @@
 import AdminNavIcon from "./NavIcon";
 
 export const metadata = {
-  title: "E-shop Admin",
+  title: "Consultant Admin",
   description: "Consultant Admin Dashboard",
 };
 
