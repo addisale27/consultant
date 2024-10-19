@@ -20,8 +20,8 @@ model User {
   updatedAt DateTime @updatedAt
 }
  enum Role{
-USER
- ADMIN
+    USER
+    ADMIN
  }
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -55,4 +55,11 @@ model VerificationToken {
  
   @@unique([identifier, token])
 }
- 
+model Scholarships{
+  id     String        @id @default(auto()) @map("_id") @db.ObjectId
+   name String 
+   title String
+   introduction String
+   flag_url String
+   category  String
+}

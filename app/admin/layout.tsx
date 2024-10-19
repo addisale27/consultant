@@ -7,7 +7,7 @@ export const metadata = {
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex min-h-[80vh]">
+    <div className="flex h-screen">
       {/* Sidebar */}
       <AdminNavIcon />
 

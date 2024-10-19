@@ -7,14 +7,15 @@ import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import DropCountryImage from "./DropCountryImage";
 import toast from "react-hot-toast";
-
 import { handleImageUpload } from "@/libs/handleImageUpload";
 import Button from "@/app/components/Button";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const AddScholarshipForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isScholarshipCreated, setIsScholarshipCreated] = useState(false);
   const [imageUrl, setImageUrl] = useState<File | null>(null);
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -27,52 +28,59 @@ const AddScholarshipForm = () => {
     defaultValues: { name: "", title: "", introduction: "", flag_url: "" },
   });
 
+  // Handle image uploads
   const handleAllImageUploads = async () => {
-    try {
-      if (imageUrl) {
+    if (imageUrl) {
+      try {
         const uploadedImages = await handleImageUpload(imageUrl);
-        setValue("flag_url", uploadedImages[0].image); // Assuming single image upload
+        setValue("flag_url", uploadedImages[0].image); // Store image URL in form state
+      } catch (error) {
+        console.error("Image upload failed:", error);
+        toast.error("Failed to upload the image.");
+        throw error; // Re-throw error to prevent further processing
       }
-    } catch (error) {
-      console.error("Error uploading images:", error);
-      toast.error("Failed to upload the image.");
     }
   };
 
+  // Handle form submission
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
     setIsLoading(true);
 
     if (!imageUrl) {
+      toast.error("Image is required!");
       setIsLoading(false);
-      return toast.error("Image is required!");
+      return;
     }
-    toast("Adding a new Scholarship. Please wait...");
 
     try {
+      toast("Uploading image and adding scholarship...");
       await handleAllImageUploads();
-      setIsLoading(false);
-      console.log("Form Data here is the form:", getValues()); // Log the form data after setting image URLs
-      //sent the form data to the mongodb
+
       const formData = getValues();
-      toast.success("Scholarship Successfully Added!");
-      console.log(formData);
-      setIsScholarshipCreated(true);
+      await axios.post("/api/scholarship", formData);
+
+      toast.success("Scholarship successfully added!");
+      router.refresh(); // Refresh page after submission
+      resetForm(); // Reset form on success
     } catch (error) {
-      console.error("Submission failed:", error);
+      console.error("Failed to submit scholarship:", error);
       toast.error("Failed to add scholarship.");
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Reset form state
+  const resetForm = () => {
+    reset();
+    setImageUrl(null);
+  };
+
+  // Reset form and image state on successful submission
   useEffect(() => {
-    if (isScholarshipCreated) {
-      reset();
-      setImageUrl(null); // Reset uploaded image state
-      setIsScholarshipCreated(false);
-    }
-  }, [isScholarshipCreated, reset]);
+    resetForm();
+  }, [reset]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -107,7 +115,11 @@ const AddScholarshipForm = () => {
 
       <DropCountryImage imageUrl={imageUrl} setImageUrl={setImageUrl} />
 
-      <Button label="Add Scholarship" onClick={handleSubmit(onSubmit)} />
+      <Button
+        label={isLoading ? "Adding..." : "Add Scholarship"}
+        onClick={handleSubmit(onSubmit)}
+        disabled={isLoading}
+      />
     </div>
   );
 };

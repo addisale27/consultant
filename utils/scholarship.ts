@@ -1,6 +1,6 @@
 export const scholarship = [
   {
-    id: 1,
+    id: "67143629f4f38c1fe6aea694",
     nation: "USA",
     school: "Harvard University",
     type: "Merit-based",

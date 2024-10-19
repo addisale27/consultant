@@ -8,34 +8,34 @@ import { useRouter } from "next/navigation";
 
 const countries = [
   {
-    id: 1,
+    id: "67143629f4f38c1fe6aea694",
     name: "US",
     image_url: "https://www.planstudyabroad.com/images/destination/usa.webp",
   },
   {
-    id: 2,
+    id: "671436d4f4f38c1fe6aea696",
     name: "Canada",
     image_url: "https://www.planstudyabroad.com/images/destination/canada.webp",
   },
   {
-    id: 3,
+    id: "671426eef4f38c1fe6aea693",
     name: "UK",
     image_url:
       "https://www.planstudyabroad.com/images/destination/united-kingdom.webp",
   },
   {
-    id: 4,
+    id: "6714367df4f38c1fe6aea695",
     name: "Australia",
     image_url:
       "https://www.planstudyabroad.com/images/destination/australia.webp",
   },
   {
-    id: 5,
+    id: "",
     name: "Germany",
     image_url: "https://www.planstudyabroad.com/images/destination/nz.webp",
   },
   {
-    id: 6,
+    id: "6714372df4f38c1fe6aea697",
     name: "Ireland",
     image_url:
       "https://www.planstudyabroad.com/images/destination/ireland.webp",
