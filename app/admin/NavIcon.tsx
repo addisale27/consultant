@@ -19,19 +19,19 @@ const AdminNavIcon = () => {
   const navToggle = () => setIsOpen((prev) => !prev);
 
   return (
-    <div className="flex relative">
+    <div className="relative flex">
       {/* Sidebar */}
       <div
         className={`${
-          isOpen ? "w-64 bg-gray-900 z-20 " : "w-20 bg-white"
+          isOpen ? "w-screen md:w-64 bg-gray-900" : "w-20 bg-white"
         } transition-all duration-300 ease-in-out 
-        text-white flex flex-col relative`}
+        text-white flex flex-col relative z-20`}
       >
         <div className="flex-grow"></div>
 
         {/* Navigation Items */}
         {isOpen && (
-          <div className={`flex flex-col gap-4 p-4 items-start`}>
+          <div className="flex flex-col gap-4 p-4 items-start w-full">
             <Link href="/admin">
               <AdminNavItem
                 label="Summary"
@@ -80,8 +80,6 @@ const AdminNavIcon = () => {
           )}
         </div>
       </div>
-
-      {/* BackDrop Component */}
     </div>
   );
 };
