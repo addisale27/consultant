@@ -7,7 +7,7 @@ import {
 } from "firebase/storage";
 import firebaseApp from "./firebase";
 export const handleImageUpload = async (images: File | File[]) => {
-  toast("Submitting your Application, Please Wait...");
+  //toast("Submitting your Application, Please Wait...");
   const uploadedImages: { image: string }[] = []; // Store uploaded image URLs
 
   try {
