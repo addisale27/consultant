@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import InfoBox from "./InfoBox";
 import { FaBookOpen, FaPaperPlane, FaBriefcase } from "react-icons/fa";

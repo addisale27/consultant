@@ -6,21 +6,40 @@ export async function POST(request: Request) {
   try {
     // Get the current user
     const currentUser = await getCurrentUser();
+    console.log("Current User:", currentUser);
 
     // Check if the user is an admin
     if (!currentUser || currentUser.role !== "ADMIN") {
       return NextResponse.json(
         { error: "Only Admin can add Scholarship" },
-        { status: 401 }
+        { status: 403 }
       );
     }
 
     // Parse the request body
     const body = await request.json();
-    const { name, title, introduction, flag_url } = body;
+    console.log("Request Body:", body);
+
+    const {
+      name,
+      sch_title,
+      sch_introduction,
+      job_title,
+      job_introduction,
+      card_url,
+      flag_url,
+    } = body;
 
     // Validate required fields
-    if (!name || !title || !introduction || !flag_url) {
+    if (
+      !name ||
+      !sch_title ||
+      !sch_introduction ||
+      !job_title ||
+      !job_introduction ||
+      !flag_url ||
+      !card_url
+    ) {
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 }
@@ -28,15 +47,17 @@ export async function POST(request: Request) {
     }
 
     // Create a new scholarship record
-    const scholarship = await prisma.scholarships.create({
+    const scholarship = await prisma.scholarship.create({
       data: {
         name,
-        title,
-        introduction,
+        sch_title,
+        sch_introduction,
+        job_title,
+        job_introduction,
         flag_url,
+        card_url,
       },
     });
-
     // Return the created scholarship
     return NextResponse.json(scholarship, { status: 201 });
   } catch (error) {

@@ -1,5 +1,3 @@
-"use client";
-
 import HeroSection from "./components/HomePage/HeroSection";
 // import ServiceCard from "./components/HomePage/ServiceCard";
 //import { services } from "../utils/ServiceOverview";
@@ -11,8 +9,11 @@ import CountryList from "./components/HomePage/CountryList";
 import SubBanner from "./components/HomePage/SubBanner";
 import HowItWorks from "./components/HomePage/HowItWorks";
 
-const Home = () => {
+import { getScholarships } from "@/actions/getScholarships";
+
+const Home = async () => {
   //const ourServices = services;
+  const allScholarships = await getScholarships({});
   return (
     <div className="flex flex-col ">
       <div className="">
@@ -29,7 +30,7 @@ const Home = () => {
       <div className="bg-slate-200 p-6">
         <Container>
           <div className=" mt-11 md:mt-[100px] xl:mt-[120px] mb-7">
-            <CountryList />
+            <CountryList country={allScholarships} />
           </div>
         </Container>
       </div>

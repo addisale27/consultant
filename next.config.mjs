@@ -8,6 +8,8 @@ const nextConfig = {
       "example.com",
       "media.istockphoto.com",
       "www.planstudyabroad.com",
+      "encrypted-tbn0.gstatic.com",
+      "as2.ftcdn.net",
     ],
   },
 };

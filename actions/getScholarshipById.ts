@@ -1,29 +1,23 @@
-import prisma from "@/libs/prismadb";
+import prisma from "@/libs/prismadb"; // Import the Prisma client instance
+import { Scholarship } from "@prisma/client"; // Import the Scholarship type
 
-interface IParams {
-  scholarshipId?: string | null; // Allow null in case of missing id
+export interface IScholarshipByIdParams {
+  scholarshipId: string; // Ensure it's a string to match your ObjectId
 }
 
-export async function getScholarshipById(params: IParams) {
+export async function getScholarshipById(
+  params: IScholarshipByIdParams
+): Promise<Scholarship | null> {
+  const { scholarshipId } = params;
+
   try {
-    const { scholarshipId } = params;
-
-    // Check if scholarshipId is provided
-    if (!scholarshipId) {
-      console.error("No scholarship ID provided");
-      return null; // Return null if no ID is given
-    }
-
-    // Fetch the scholarship record from the database
-    const scholarship = await prisma.scholarships.findUnique({
-      where: {
-        id: scholarshipId,
-      },
+    const scholarship = await prisma.scholarship.findUnique({
+      where: { id: scholarshipId },
     });
-    if (!scholarship) return null;
-    // Return scholarship or null if not found
+
     return scholarship;
   } catch (error) {
-    console.error("Error fetching scholarship:", error);
+    console.error("Error fetching scholarship by ID:", error);
+    throw new Error("Failed to retrieve scholarship");
   }
 }

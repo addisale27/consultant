@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import Button from "../Button";
 import JobTypeCard from "./JobTypeCard";
 
 interface JobTypeSwiperProps {
@@ -18,7 +16,6 @@ const JobTypeSwiper: React.FC<JobTypeSwiperProps> = ({
   jobType,
   countryName,
 }) => {
-  const router = useRouter();
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-8 p-6  ">
@@ -64,7 +61,7 @@ const JobTypeSwiper: React.FC<JobTypeSwiperProps> = ({
           </li>
         </ul>
       </div>
-      <div className="max-w-[700px] flex justify-center items-center mx-auto">
+      {/* <div className="max-w-[700px] flex justify-center items-center mx-auto">
         <Button
           label={`Start Your Journey To ${countryName}`}
           onClick={() => {
@@ -72,7 +69,7 @@ const JobTypeSwiper: React.FC<JobTypeSwiperProps> = ({
           }}
           custom="bg-red-700"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

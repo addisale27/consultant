@@ -52,14 +52,16 @@ model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
   @@unique([identifier, token])
 }
-model Scholarships{
-  id     String        @id @default(auto()) @map("_id") @db.ObjectId
-   name String 
-   title String
-   introduction String
-   flag_url String
-   category  String
+model Scholarship {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  sch_title        String
+  sch_introduction String
+  job_title        String
+  job_introduction String
+  flag_url         String
+  card_url         String
+  
 }

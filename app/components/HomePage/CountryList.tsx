@@ -3,46 +3,49 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { useRouter } from "next/navigation";
+import { scholarships } from "@/types/scholarships";
 // import { motion } from "framer-motion";
 // import { fadeIn } from "@/utils/variants";
 
-const countries = [
-  {
-    id: "67143629f4f38c1fe6aea694",
-    name: "US",
-    image_url: "https://www.planstudyabroad.com/images/destination/usa.webp",
-  },
-  {
-    id: "671436d4f4f38c1fe6aea696",
-    name: "Canada",
-    image_url: "https://www.planstudyabroad.com/images/destination/canada.webp",
-  },
-  {
-    id: "671426eef4f38c1fe6aea693",
-    name: "UK",
-    image_url:
-      "https://www.planstudyabroad.com/images/destination/united-kingdom.webp",
-  },
-  {
-    id: "6714367df4f38c1fe6aea695",
-    name: "Australia",
-    image_url:
-      "https://www.planstudyabroad.com/images/destination/australia.webp",
-  },
-  {
-    id: "",
-    name: "Germany",
-    image_url: "https://www.planstudyabroad.com/images/destination/nz.webp",
-  },
-  {
-    id: "6714372df4f38c1fe6aea697",
-    name: "Ireland",
-    image_url:
-      "https://www.planstudyabroad.com/images/destination/ireland.webp",
-  },
-];
-
-const CountryList = () => {
+// const countries = [
+//   {
+//     id: "67143629f4f38c1fe6aea694",
+//     name: "US",
+//     image_url: "https://www.planstudyabroad.com/images/destination/usa.webp",
+//   },
+//   {
+//     id: "671436d4f4f38c1fe6aea696",
+//     name: "Canada",
+//     image_url: "https://www.planstudyabroad.com/images/destination/canada.webp",
+//   },
+//   {
+//     id: "671426eef4f38c1fe6aea693",
+//     name: "UK",
+//     image_url:
+//       "https://www.planstudyabroad.com/images/destination/united-kingdom.webp",
+//   },
+//   {
+//     id: "6714367df4f38c1fe6aea695",
+//     name: "Australia",
+//     image_url:
+//       "https://www.planstudyabroad.com/images/destination/australia.webp",
+//   },
+//   {
+//     id: "",
+//     name: "Germany",
+//     image_url: "https://www.planstudyabroad.com/images/destination/nz.webp",
+//   },
+//   {
+//     id: "6714372df4f38c1fe6aea697",
+//     name: "Ireland",
+//     image_url:
+//       "https://www.planstudyabroad.com/images/destination/ireland.webp",
+//   },
+// ];
+interface CountryListProps {
+  country: scholarships[];
+}
+const CountryList: React.FC<CountryListProps> = ({ country }) => {
   const router = useRouter();
   return (
     <div className="w-full flex flex-col gap-4 md:gap-16">
@@ -122,17 +125,17 @@ const CountryList = () => {
               },
             }}
           >
-            {countries.map((country) => (
-              <SwiperSlide key={country.id}>
+            {country.map((cou) => (
+              <SwiperSlide key={cou.id}>
                 <div
                   className="bg-white rounded-xl overflow-hidden shadow-md mx-auto"
                   onClick={() => {
-                    router.push(`/country/${country.id}`);
+                    router.push(`/country/${cou.id}`);
                   }}
                 >
                   <Image
-                    src={country.image_url}
-                    alt={country.name}
+                    src={cou.card_url}
+                    alt={cou.name}
                     width={300}
                     height={300}
                     objectFit="cover"
@@ -140,7 +143,7 @@ const CountryList = () => {
                   />
 
                   <div className="absolute bottom-3 left-4 right-4 bg-gradient-to-r from-orange-500 to-red-500 font-semibold text-white text-xl p-3 text-center border-[1px] border-white">
-                    <button>Apply for {country.name}</button>
+                    <button>Apply for {cou.name}</button>
                   </div>
                 </div>
               </SwiperSlide>
