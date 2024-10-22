@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-
 import Input from "../components/Inputs/Input";
-import TextArea from "../components/Inputs/TextArea";
 import Button from "../components/Button";
 import { FaPlay } from "react-icons/fa";
 import DocumentApply from "./DocumentApply";
@@ -18,6 +16,12 @@ import {
 import firebaseApp from "@/libs/firebase";
 import { motion } from "framer-motion";
 import { fadeIn } from "@/utils/variants";
+import SelectionInput from "../components/Inputs/Selection";
+import CountrySelection from "../components/Inputs/CountrySelection";
+import FieldOfStudySelection from "../components/Inputs/FieldSelection";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
 // Define an interface for the uploaded images
 interface UploadedImage {
   image: string;
@@ -29,7 +33,6 @@ export const handleImageUpload = async (
 ): Promise<UploadedImage[]> => {
   const uploadedImages: UploadedImage[] = []; // Store uploaded image URLs
 
-  // Normalize the input to always be an array
   const imagesArray = Array.isArray(images) ? images : [images];
 
   for (const item of imagesArray) {
@@ -42,27 +45,16 @@ export const handleImageUpload = async (
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          // Observe state change events such as progress, pause, and resume
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
         },
         (error) => {
-          // Handle unsuccessful uploads
           console.error(error);
           reject(error);
           toast.error("Something went wrong please try again later!");
         },
         () => {
-          // Handle successful uploads on complete
           getDownloadURL(uploadTask.snapshot.ref)
             .then((downloadURL) => {
               uploadedImages.push({ image: downloadURL });
@@ -93,24 +85,28 @@ const ApplicationForm = () => {
     reset,
     setValue,
     formState: { errors },
-    getValues, // Use getValues to retrieve form values
+    getValues,
+    watch,
   } = useForm<FieldValues>({
     defaultValues: {
       fullName: "",
-      nationality: "",
-      destinationCountry: "",
-      field: "",
       email: "",
-      message: "",
+      phoneNumber: "",
+      type: "",
+      field: "",
       passportImage: "",
       birthCerteficateImage: "",
       educationalBackground: [],
     },
   });
 
+  const applyType = watch("type");
+  const router = useRouter();
+
   useEffect(() => {
     if (isFormSubmited) {
       reset();
+      router.refresh();
       setIsFormSubmited(false);
     }
   }, [isFormSubmited]);
@@ -119,20 +115,25 @@ const ApplicationForm = () => {
     console.log(data);
     setIsLoading(true);
     toast("Submitting your application. please wait...");
+
     if (!passportFile || !idFile || educationFiles.length === 0) {
       setIsLoading(false);
-      return toast.error("All documents are needed!");
+      return toast.error("All documents are required!");
     }
 
-    await handleAllImageUploads();
-    setIsLoading(false);
-    console.log("Form Data here is the form:", getValues()); // Log the form data after setting image URLs
-    //sent the form data to the mongodb
-    const formData = getValues();
-    toast.success("Application Submitted!");
-    console.log(formData);
-    ///////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////
+    try {
+      await handleAllImageUploads();
+      const formData = getValues();
+      await axios.post("/api/application", formData);
+      toast.success("Application Submitted!");
+      setIsFormSubmited(true);
+      console.log(formData);
+    } catch (error) {
+      toast.error("Submission failed. Try again.");
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleAllImageUploads = async () => {
@@ -147,32 +148,24 @@ const ApplicationForm = () => {
     };
 
     try {
-      // Upload the passport file if it exists
       if (passportFile) {
         uploadedImages.passport = await handleImageUpload(passportFile);
-        // Set the uploaded passport image URL in the form state
-        setValue("passportImage", uploadedImages.passport[0].image); // Assuming you only upload one passport image
+        setValue("passportImage", uploadedImages.passport[0].image);
       }
 
-      // Upload the ID file if it exists
       if (idFile) {
         uploadedImages.id = await handleImageUpload(idFile);
-        // Set the uploaded ID image URL in the form state
-        setValue("birthCerteficateImage", uploadedImages.id[0].image); // Assuming you only upload one ID image
+        setValue("birthCerteficateImage", uploadedImages.id[0].image);
       }
 
-      // Upload the educational background images if they exist
       if (educationFiles.length > 0) {
         uploadedImages.education = await handleImageUpload(educationFiles);
-        // Set the uploaded educational background images in the form state
         setValue(
           "educationalBackground",
           uploadedImages.education.map((img) => img.image)
-        ); // Assuming multiple educational background images
+        );
       }
 
-      // Optionally, show a success message after all uploads are complete
-      // toast.success("All images uploaded successfully!");
       console.log("Uploaded images:", uploadedImages);
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -212,55 +205,13 @@ const ApplicationForm = () => {
         </p>
       </motion.div>
       <div className="flex flex-col md:flex-row gap-6 justify-center p-5">
-        <motion.div
-          variants={fadeIn("down", 0.05)}
-          initial="hidden"
-          whileInView={"show"}
-          viewport={{ once: false, amount: 0.7 }}
-          className="flex flex-col gap-4 w-full md:w-1/2"
-        >
+        <div className="flex flex-col gap-4 w-full md:w-1/2">
           <Input
             id="fullName"
             label="Full Name"
             disabled={isLoading}
             register={register}
             errors={errors}
-            required
-          />
-          <Input
-            id="nationality"
-            label="Nationality"
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            type="text"
-            required
-          />
-          <Input
-            id="phone"
-            label="Phone Number"
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            type="tel"
-            required
-          />
-          <Input
-            id="field"
-            label="Field of study"
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            type="text"
-            required
-          />
-          <Input
-            id="destination"
-            label="Destination Country"
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            type="text"
             required
           />
           <Input
@@ -272,14 +223,56 @@ const ApplicationForm = () => {
             type="email"
             required
           />
-        </motion.div>
-        <motion.div
-          variants={fadeIn("up", 0.05)}
-          initial="hidden"
-          whileInView={"show"}
-          viewport={{ once: false, amount: 0.7 }}
-          className="flex flex-col gap-4 w-full md:w-1/2"
-        >
+          <Input
+            id="phoneNumber"
+            label="Phone Number"
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+            type="tel"
+            required
+          />
+          <CountrySelection
+            id="destination"
+            label="Destination Country"
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+            required
+          />
+
+          <SelectionInput
+            id="type"
+            label="Apply For "
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+            required
+          />
+          {applyType === "scholarship" && (
+            <>
+              {/* <Input
+            id="nationality"
+            label="Nationality"
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+            type="text"
+            required
+          /> */}
+
+              <FieldOfStudySelection
+                id="field"
+                label="Field Of Study"
+                disabled={isLoading}
+                register={register}
+                errors={errors}
+                required
+              />
+            </>
+          )}
+        </div>
+        <div className="flex flex-col gap-4 w-full md:w-1/2">
           <DocumentApply
             passportFile={passportFile}
             idFile={idFile}
@@ -288,15 +281,15 @@ const ApplicationForm = () => {
             setEducationFiles={setEducationFiles}
             setIdFile={setIdFile}
           />
-          <TextArea
+          {/* <TextArea
             id="message"
             label="Message"
             disabled={isLoading}
             register={register}
             errors={errors}
             required
-          />
-        </motion.div>
+          /> */}
+        </div>
       </div>
       <motion.div
         variants={fadeIn("up", 0.05)}

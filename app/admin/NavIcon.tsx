@@ -33,36 +33,44 @@ const AdminNavIcon = () => {
         {isOpen && (
           <div className="flex flex-col gap-4 p-4 items-start w-full">
             <Link href="/admin">
-              <AdminNavItem
-                label="Summary"
-                icon={MdDashboard}
-                selected={pathName === "/admin"}
-              />
+              <div onClick={navToggle}>
+                <AdminNavItem
+                  label="Summary"
+                  icon={MdDashboard}
+                  selected={pathName === "/admin"}
+                />
+              </div>
             </Link>
 
             <Link href="/admin/add-scholarship">
-              <AdminNavItem
-                label="Add Scholarship"
-                icon={MdLibraryAdd}
-                selected={pathName === "/admin/add-scholarship"}
-              />
+              <div onClick={navToggle}>
+                <AdminNavItem
+                  label="Add Scholarship"
+                  icon={MdLibraryAdd}
+                  selected={pathName === "/admin/add-scholarship"}
+                />
+              </div>
             </Link>
 
             <Link href="/admin/manage-scholarship">
-              <AdminNavItem
-                label="Manage Scholarship"
-                icon={MdDns}
-                selected={pathName === "/admin/manage-scholarship"}
-              />
+              <div onClick={navToggle}>
+                <AdminNavItem
+                  label="Manage Scholarship"
+                  icon={MdDns}
+                  selected={pathName === "/admin/manage-scholarship"}
+                />
+              </div>
             </Link>
 
             <div className="mb-8">
               <Link href="/admin/manage-applications">
-                <AdminNavItem
-                  label="Manage Applications"
-                  icon={MdFormatListBulleted}
-                  selected={pathName === "/admin/manage-applications"}
-                />
+                <div onClick={navToggle}>
+                  <AdminNavItem
+                    label="Manage Applications"
+                    icon={MdFormatListBulleted}
+                    selected={pathName === "/admin/manage-applications"}
+                  />
+                </div>
               </Link>
             </div>
           </div>

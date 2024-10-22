@@ -15,6 +15,7 @@ model User {
   image         String?
   hashedPassword String?
   accounts      Account[]
+  application Application[]
   role Role @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,5 +64,17 @@ model Scholarship {
   job_introduction String
   flag_url         String
   card_url         String
-  
+}
+model Application {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String  @db.ObjectId
+  fullName         String
+  email            String
+  phoneNumber      String
+  type             String
+  field            String
+  passportImage    String
+  birthCerteficateImage String
+  educationalBackground String []
+   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
