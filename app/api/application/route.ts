@@ -14,6 +14,7 @@ export async function POST(request: Request) {
     type,
     field,
     passportImage,
+    destination,
     birthCerteficateImage,
     educationalBackground,
   } = body;
@@ -25,6 +26,7 @@ export async function POST(request: Request) {
       email,
       phoneNumber,
       type,
+      destination,
       field,
       passportImage,
       birthCerteficateImage,

@@ -47,6 +47,7 @@ interface CountryListProps {
 }
 const CountryList: React.FC<CountryListProps> = ({ country }) => {
   const router = useRouter();
+  console.log(country);
   return (
     <div className="w-full flex flex-col gap-4 md:gap-16">
       {/* Header Section */}

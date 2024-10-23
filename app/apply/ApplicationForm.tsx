@@ -92,6 +92,7 @@ const ApplicationForm = () => {
       fullName: "",
       email: "",
       phoneNumber: "",
+      destination: "",
       type: "",
       field: "",
       passportImage: "",
