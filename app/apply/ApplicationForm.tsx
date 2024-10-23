@@ -95,6 +95,7 @@ const ApplicationForm = () => {
       destination: "",
       type: "",
       field: "",
+      status: "pending",
       passportImage: "",
       birthCerteficateImage: "",
       educationalBackground: [],

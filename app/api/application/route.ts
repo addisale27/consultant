@@ -13,6 +13,7 @@ export async function POST(request: Request) {
     phoneNumber,
     type,
     field,
+    status,
     passportImage,
     destination,
     birthCerteficateImage,
@@ -26,6 +27,7 @@ export async function POST(request: Request) {
       email,
       phoneNumber,
       type,
+      status,
       destination,
       field,
       passportImage,
@@ -33,6 +35,23 @@ export async function POST(request: Request) {
       educationalBackground,
       userId: currentUser.id, // Link the application to the current user
     },
+  });
+
+  return NextResponse.json(application);
+}
+
+export async function PUT(request: Request) {
+  const currentUser = await getCurrentUser();
+  if (!currentUser) return NextResponse.error();
+  if (currentUser.role !== "ADMIN") return NextResponse.error();
+
+  // You need to await request.json() as it returns a promise
+  const body = await request.json();
+  const { id, status } = body;
+
+  const application = await prisma.application.update({
+    where: { id: id },
+    data: { status: status },
   });
 
   return NextResponse.json(application);

@@ -5,12 +5,12 @@ import { Application } from "@prisma/client";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
 import moment from "moment";
-import ActionBtn from "../admincomponents/ActionBtn";
+
 import { MdAccessTimeFilled, MdDone, MdRemoveRedEye } from "react-icons/md";
-import axios from "axios";
-import toast from "react-hot-toast";
+
 import Status from "@/app/components/Status";
 import { FaTimesCircle } from "react-icons/fa";
+import ActionBtn from "../admin/admincomponents/ActionBtn";
 
 // Define the type for rows used in DataGrid
 interface ApplicationRow {
@@ -22,53 +22,14 @@ interface ApplicationRow {
   type: string; // Ensure the type field is included
 }
 
-interface ManageApplicationClientProps {
+interface ApplicationClientProps {
   applications: Application[];
 }
 
-const ManageApplicationClient: React.FC<ManageApplicationClientProps> = ({
+const ApplicationClient: React.FC<ApplicationClientProps> = ({
   applications,
 }) => {
   const router = useRouter();
-
-  const handleReviewed = (id: string) => {
-    axios
-      .put("/api/application", { id, status: "reviewed" })
-      .then(() => {
-        toast.success("Application reviewed");
-        router.refresh();
-      })
-      .catch((error) => {
-        toast.error("Something went wrong!");
-        console.log(error);
-      });
-  };
-
-  const handlePending = (id: string) => {
-    axios
-      .put("/api/application", { id, status: "pending" })
-      .then(() => {
-        toast.success("Application status updated to pending");
-        router.refresh();
-      })
-      .catch((error) => {
-        toast.error("Something went wrong!");
-        console.log(error);
-      });
-  };
-
-  const handleDenied = (id: string) => {
-    axios
-      .put("/api/application", { id, status: "denied" })
-      .then(() => {
-        toast.success("Application denied");
-        router.refresh();
-      })
-      .catch((error) => {
-        toast.error("Something went wrong!");
-        console.log(error);
-      });
-  };
 
   // Type the rows array properly
   let rows: ApplicationRow[] = [];
@@ -136,24 +97,6 @@ const ManageApplicationClient: React.FC<ManageApplicationClientProps> = ({
         return (
           <div className="flex justify-between gap-4 w-full my-2">
             <ActionBtn
-              icon={FaTimesCircle}
-              onClick={() => {
-                handleDenied(params.row.id);
-              }}
-            />
-            <ActionBtn
-              icon={MdAccessTimeFilled}
-              onClick={() => {
-                handlePending(params.row.id);
-              }}
-            />
-            <ActionBtn
-              icon={MdDone}
-              onClick={() => {
-                handleReviewed(params.row.id);
-              }}
-            />
-            <ActionBtn
               icon={MdRemoveRedEye}
               onClick={() => {
                 router.push(`/application/${params.row.id}`);
@@ -187,4 +130,4 @@ const ManageApplicationClient: React.FC<ManageApplicationClientProps> = ({
   );
 };
 
-export default ManageApplicationClient;
+export default ApplicationClient;

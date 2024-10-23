@@ -51,7 +51,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         <div className="absolute rounded-md shadow-md w-[170px] bg-white overflow-hidden right-0 top-12 text-sm cursor-pointer flex flex-col z-50">
           {currentUser ? (
             <>
-              <Link href="/">
+              <Link href="/myApplications">
                 <MenuItem onClick={toggleOpen}>Your Applications</MenuItem>
               </Link>
               {currentUser.role === Role.ADMIN && (
