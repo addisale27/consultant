@@ -113,7 +113,7 @@ const ApplicationClient: React.FC<ApplicationClientProps> = ({
   return (
     <div className="max-w-[1450px] m-auto text-xl">
       <div className="mb-4 mt-8">
-        <Heading title="Manage Applications" center />
+        <Heading title="Your Applications" center />
       </div>
       <div className="border-2" style={{ height: 600, width: "100%" }}>
         <DataGrid

@@ -1,11 +1,12 @@
 "use client";
+
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { FaTrash } from "react-icons/fa"; // Trash icon from react-icons
+//import { FaTrash } from "react-icons/fa"; // Trash icon from react-icons
 
 interface DropCountryImageProps {
-  imageUrl: File | null;
+  imageUrl: File | string | null; // Allow string for existing image URLs
   setImageUrl: (file: File | null) => void;
   label: string; // Label for the upload field
 }
@@ -20,7 +21,7 @@ const DropCountryImage: React.FC<DropCountryImageProps> = ({
   // Cleanup URLs for previews on component unmount or file change
   useEffect(() => {
     let previewUrl: string | undefined;
-    if (imageUrl) {
+    if (imageUrl && typeof imageUrl !== "string") {
       previewUrl = URL.createObjectURL(imageUrl);
     }
     return () => {
@@ -52,12 +53,15 @@ const DropCountryImage: React.FC<DropCountryImageProps> = ({
   });
 
   // Handler to delete the uploaded image
-  const deleteImage = () => setImageUrl(null);
+  //const deleteImage = () => setImageUrl(null);
 
   // Render image preview with delete icon
   const renderImagePreview = () => {
     if (!imageUrl || !showImagePreview) return null;
-    const previewUrl = URL.createObjectURL(imageUrl);
+
+    const previewUrl =
+      typeof imageUrl === "string" ? imageUrl : URL.createObjectURL(imageUrl);
+
     return (
       <div className="relative">
         <div
@@ -71,17 +75,18 @@ const DropCountryImage: React.FC<DropCountryImageProps> = ({
             src={previewUrl}
             alt={`${label} Preview`}
             className="w-full h-full object-cover"
-            width={100}
-            height={100}
+            width={400}
+            height={400}
           />
         </div>
-        <FaTrash
+        {/* <FaTrash
+          aria-label={`Delete ${label}`}
           className="absolute top-1 right-1 text-red-500 cursor-pointer"
           onClick={(e) => {
             e.stopPropagation(); // Prevent opening file dialog
             deleteImage();
           }}
-        />
+        /> */}
       </div>
     );
   };
