@@ -13,7 +13,6 @@ export async function PUT(
   if (!currentUser || currentUser.role !== "ADMIN") {
     return NextResponse.error();
   }
-
   const {
     name,
     sch_title,

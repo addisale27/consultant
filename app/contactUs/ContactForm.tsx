@@ -1,27 +1,24 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Heading from "../components/Heading";
 import Input from "../components/Inputs/Input";
 import TextArea from "../components/Inputs/TextArea";
 import Button from "../components/Button";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const ContactForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-
   const [isFormSubmited, setIsFormSubmited] = useState(false);
   const {
     register,
     handleSubmit,
-
     reset,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
       name: "",
       email: "",
-
       message: "",
     },
   });
@@ -32,26 +29,23 @@ const ContactForm = () => {
       setIsFormSubmited(false);
     }
   }, [isFormSubmited]);
+
   const onsubmit: SubmitHandler<FieldValues> = async (data) => {
-    //upload images to fb
-    console.log(data);
-    setIsLoading(false);
-    setIsFormSubmited(true);
-    //save products to mongodb
-    // axios
-    //   .post("/api/product", productData)
-    //   .then(() => {
-    //     toast.success("Product Created");
-    //     setIsProductCreated(true);
-    //     router.refresh();
-    //   })
-    //   .catch((error) => {
-    //     toast.error("something went wrong");
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    setIsLoading(true);
+    try {
+      await axios.post("/api/emailUs", data);
+      toast.success(
+        "Your message has been successfully sent! We will respond to you soon!"
+      );
+      setIsFormSubmited(true);
+    } catch (error) {
+      toast.error("Submission failed. Try again.");
+      console.error("Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <>
       <Heading title="Get In Touch" center />
@@ -72,7 +66,6 @@ const ContactForm = () => {
         type="email"
         required
       />
-
       <TextArea
         id="message"
         label="Message"
@@ -81,7 +74,6 @@ const ContactForm = () => {
         errors={errors}
         required
       />
-
       <Button
         label={isLoading ? `Loading...` : `Send Message`}
         onClick={handleSubmit(onsubmit)}

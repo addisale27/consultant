@@ -35,12 +35,15 @@ export const authOptions: AuthOptions = {
         if (!user || !user?.hashedPassword) {
           throw new Error("Invalid Email or Password!");
         }
+        if (!user.active)
+          throw new Error("This has not been activated please activate it.");
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
         );
         if (!isCorrectPassword) throw new Error("Invalid Email or Password!");
-        return user;
+        //you don`t have to return the user with its hashedpassword
+        return user; //the user go to the next auth session
       },
     }),
   ],
@@ -54,3 +57,4 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 export default NextAuth(authOptions);
+// export {handler as GET,handler as POSt}

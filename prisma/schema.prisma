@@ -10,10 +10,13 @@ generator client {
 model User {
   id            String          @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?         @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   hashedPassword String?
+  active Boolean @default(false)
+  isVerified      Boolean  @default(false)
+  activateTokens ActivateToken[]
   accounts      Account[]
   application Application[]
   role Role @default(USER)
@@ -36,24 +39,19 @@ model Account {
   token_type        String?
   scope             String?
   id_token          String? @db.String
-  
- 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
   @@unique([provider, providerAccountId])
 }
- 
-
- 
-model VerificationToken {
+model ActivateToken {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  identifier String
-  token      String
-  expires    DateTime
-  @@unique([identifier, token])
+  userId           String  @db.ObjectId
+  token      String @unique
+  createdAt DateTime @default(now())
+  activatedAt DateTime?
+  expiresAt DateTime?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 model Scholarship {
   id               String  @id @default(auto()) @map("_id") @db.ObjectId

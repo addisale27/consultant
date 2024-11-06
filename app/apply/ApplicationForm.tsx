@@ -21,6 +21,7 @@ import CountrySelection from "../components/Inputs/CountrySelection";
 import FieldOfStudySelection from "../components/Inputs/FieldSelection";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { CurrentUser } from "../components/NavgationBar/UserMenu";
 
 // Define an interface for the uploaded images
 interface UploadedImage {
@@ -71,8 +72,10 @@ export const handleImageUpload = async (
 
   return uploadedImages; // Return the uploaded images
 };
-
-const ApplicationForm = () => {
+interface ApplicatioFormProps {
+  currentUser: CurrentUser | null;
+}
+const ApplicationForm: React.FC<ApplicatioFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFormSubmited, setIsFormSubmited] = useState(false);
   const [passportFile, setPassportFile] = useState<File | null>(null);
@@ -174,7 +177,24 @@ const ApplicationForm = () => {
       toast.error("Failed to upload some images.");
     }
   };
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/register");
+      router.refresh();
+    }
+    if (!currentUser?.active) {
+      router.push("/register");
+      router.refresh();
+    }
+  }, [currentUser, router]);
 
+  if (!currentUser?.active) {
+    return (
+      <p className="text-center">
+        You have to activate your account first. Redirecting...
+      </p>
+    );
+  }
   return (
     <>
       <motion.div

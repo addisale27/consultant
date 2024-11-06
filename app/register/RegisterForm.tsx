@@ -13,13 +13,16 @@ import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { CurrentUser } from "../components/NavgationBar/UserMenu";
 
-// Define the callback type
 interface RegisterFormProps {
   currentUser: CurrentUser | null;
 }
+
 const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [emailIsSent, setIsEmailSent] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -32,49 +35,70 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    axios
-      .post("/api/register", data)
-      .then(() => {
-        toast.success("Account Created!");
-        return signIn("credentials", {
-          email: data.email,
-          password: data.password,
-          redirect: false,
-        });
-      })
-      .then((callback) => {
-        console.log("Sign-in callback:", callback); // Log the callback
-        if (callback?.ok) {
-          router.push("/");
-          router.refresh();
-          toast.success("Logged in");
-        } else if (callback?.error) {
-          toast.error(callback.error);
-          console.log("Sign-in error:", callback.error); // Log the error
+    setUserEmail(data.email); // Store the email entered by the user for display
+
+    try {
+      const response = await axios.post("/api/register", data);
+      if (response.status === 200) {
+        setIsEmailSent(true);
+        toast.success(
+          "Account Created! Please check your email to activate your account."
+        );
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          const message = error.response.data.error;
+          if (message.includes("active")) {
+            toast.error(
+              "An account with this email already exists and is active."
+            );
+          } else if (message.includes("inactive")) {
+            toast(
+              "A new activation email has been sent to your email address."
+            );
+            setIsEmailSent(true);
+          } else {
+            toast.error(message || "Invalid request.");
+          }
+        } else if (error.response?.status === 500) {
+          toast.error("Server error. Please try again later.");
+        } else {
+          console.error("API error:", error.message, error.response?.data);
+          toast.error(
+            "A network or server error occurred. Please check your connection."
+          );
         }
-      })
-      .catch((err) => {
-        toast.error("Something went wrong!");
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      } else {
+        console.error("Unexpected error:", error);
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser?.active) {
       router.push("/");
       router.refresh();
     }
   }, [currentUser, router]);
 
-  if (currentUser) {
-    // Show loading state while submitting
-    return <p className="text-center">Logged in. Redirecting..</p>;
+  if (currentUser?.active) {
+    return <p className="text-center">Logged in. Redirecting...</p>;
+  }
+
+  if (emailIsSent) {
+    return (
+      <p className="text-center text-lg font-semibold text-blue-700">
+        We&apos;ve sent an activation link to{" "}
+        <span className="font-bold">{userEmail}</span>. Please check your inbox
+        and follow the link to activate your account.
+      </p>
+    );
   }
 
   return (
@@ -84,9 +108,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         outline
         label="Sign up with Google"
         icon={AiOutlineGoogle}
-        onClick={() => {
-          signIn("google");
-        }}
+        onClick={() => signIn("google")}
       />
       <hr className="bg-slate-300 w-full h-px" />
       <Input
@@ -115,7 +137,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         type="password"
       />
       <Button
-        label={isLoading ? "Loading" : "Sign Up"}
+        label={isLoading ? "Loading..." : "Sign Up"}
         onClick={handleSubmit(onSubmit)}
         disabled={isLoading}
       />

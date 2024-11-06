@@ -17,6 +17,8 @@ export interface CurrentUser {
   role: Role; // User's role
   createdAt: string; // ISO string
   updatedAt: string; // ISO string
+  isVerified: boolean;
+  active: boolean;
 }
 
 // Role enum remains the same

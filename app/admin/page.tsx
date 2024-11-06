@@ -1,4 +1,3 @@
-import { getCurrentUser } from "@/actions/getCurrentUser";
 import Container from "../components/Container";
 import SummaryDetail from "./SummaryDetail";
 import NullData from "../components/NullData";
@@ -8,13 +7,6 @@ import { getScholarships } from "@/actions/getScholarships";
 
 const AdminHome = async () => {
   try {
-    const currentUser = await getCurrentUser();
-
-    // Check if the user is an admin
-    if (!currentUser || currentUser.role !== "ADMIN") {
-      return <NullData title="Oops! Access denied!" />;
-    }
-
     const users = await getUsers();
     const totalUsers = users ? users.length : 0;
 
