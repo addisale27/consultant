@@ -1,6 +1,7 @@
 import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
 
+// Activation endpoint
 export async function POST(request: Request) {
   try {
     const { token } = await request.json();
@@ -49,6 +50,11 @@ export async function POST(request: Request) {
       data: { activatedAt: new Date() },
     });
 
+    // Delete the token after marking it as activated
+    await prisma.activateToken.delete({
+      where: { token },
+    });
+
     console.log("Account activated successfully for user:", activateToken.user);
 
     return NextResponse.json(
@@ -64,5 +70,20 @@ export async function POST(request: Request) {
       },
       { status: 500 }
     );
+  }
+}
+
+// Function to periodically clear expired tokens
+export async function clearExpiredTokens() {
+  try {
+    const now = new Date();
+    const deletedTokens = await prisma.activateToken.deleteMany({
+      where: {
+        expiresAt: { lt: now },
+      },
+    });
+    console.log("Expired tokens cleared:", deletedTokens.count);
+  } catch (error) {
+    console.error("Error clearing expired tokens:", error);
   }
 }

@@ -17,6 +17,7 @@ model User {
   active Boolean @default(false)
   isVerified      Boolean  @default(false)
   activateTokens ActivateToken[]
+  passwordResetTokens PasswordResetToken[]
   accounts      Account[]
   application Application[]
   role Role @default(USER)
@@ -43,6 +44,14 @@ model Account {
   updatedAt DateTime @updatedAt
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([provider, providerAccountId])
+}
+model PasswordResetToken{
+   id            String          @id @default(auto()) @map("_id") @db.ObjectId
+   token String @unique
+   createdAt DateTime @default(now())
+   resetAt DateTime?
+   userId String @db.ObjectId
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 model ActivateToken {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId

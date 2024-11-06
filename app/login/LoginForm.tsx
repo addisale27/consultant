@@ -11,9 +11,11 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { CurrentUser } from "../components/NavgationBar/UserMenu";
+
 interface RegisterFormProps {
   currentUser: CurrentUser | null;
 }
+
 const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -27,6 +29,7 @@ const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
       password: "",
     },
   });
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     signIn("credentials", { ...data, redirect: false }).then((callback) => {
@@ -40,6 +43,7 @@ const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
       }
     });
   };
+
   useEffect(() => {
     if (currentUser) {
       router.push("/");
@@ -48,7 +52,6 @@ const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   }, [currentUser, router]);
 
   if (currentUser) {
-    // Show loading state while submitting
     return <p className="text-center">Logged in. Redirecting..</p>;
   }
 
@@ -84,18 +87,29 @@ const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         required
         type="password"
       />
+
       <Button
         label={isLoading ? "Loading" : "Sign in"}
         onClick={handleSubmit(onSubmit)}
         disabled={isLoading}
       />
-      <p className="text-sm">
-        Don&apos;t have an account?
-        <Link className="underline" href="/register">
-          {" "}
-          Sign up
-        </Link>
-      </p>
+      <div className="flex justify-between items-center w-full flex-row-reverse">
+        <div className="">
+          <Link
+            href="/passwordReset"
+            className="text-sm text-blue-600 hover:underline"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+        <p className="text-sm ">
+          Don&apos;t have an account?
+          <Link className="underline text-blue-600" href="/register">
+            {" "}
+            Sign up
+          </Link>
+        </p>
+      </div>
     </>
   );
 };

@@ -1,11 +1,9 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import Button from "@/app/components/Button";
-
 const Activate = ({ params }: { params: { token: string } }) => {
   const { token } = params;
   const [status, setStatus] = useState<"loading" | "success" | "error">(
