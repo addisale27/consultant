@@ -1,7 +1,5 @@
 import Link from "next/link";
 import Container from "../Container";
-//import Destination from "./Destination";
-//import { scholarship } from "@/utils/scholarship";
 import UserMenu from "./UserMenu";
 import HamburgurMenu from "./HamburgurMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
@@ -11,13 +9,9 @@ import { Redressed } from "next/font/google";
 
 const redressed = Redressed({ subsets: ["latin"], weight: "400" });
 const NavBar = async () => {
-  // const scholarshipsDestinations = Array.from(
-  //   new Set(scholarship.map((item) => item.nation))
-  // );
   const currentUser = await getCurrentUser();
-
   return (
-    <div className="sticky top-0 w-full  z-30 shadow-sm font-semibold">
+    <div className="sticky top-0 w-full z-30 shadow-sm font-semibold">
       <div className=" bg-blue-700 border-b-[1px] py-4">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
@@ -32,21 +26,18 @@ const NavBar = async () => {
                   <div
                     className={`${redressed.className} font-bold text-1xl text-white flex flex-col`}
                   >
-                    <span>NAMEOFTHECOM.</span>
-                    <span>CONSULTANCY</span>
+                    <span className="uppercase">Hero Edu. &amp; job</span>
+                    <span className="uppercase">CONSULTANCY</span>
                   </div>
                 </div>
               </Link>
             </div>
-            <div className="text-white hidden">search</div>
+
             <div className="md:hidden block">
               <HamburgurMenu currentUser={currentUser} />
             </div>
             <div className="items-center gap-4 hidden md:flex">
               <div className="flex gap-8 md:gap-12 items-center">
-                {/* <Destination
-                  scholarshipsDestinations={scholarshipsDestinations}
-                /> */}
                 <div className="text-white">
                   <Link href="/apply">Apply Now </Link>
                 </div>

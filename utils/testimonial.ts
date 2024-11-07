@@ -13,7 +13,8 @@ export const testimonials = [
     testimonial:
       "I was overwhelmed with the college application process, but the consultants provided invaluable support and insight. My daughter got into her dream school!",
     date: "2024-09-20",
-    avatar: "https://via.placeholder.com/50", // Placeholder image URL
+    avatar:
+      "https://media.istockphoto.com/id/1365666807/photo/mid-adult-male-gig-employee-smiles-from-drivers-seat.jpg?s=612x612&w=0&k=20&c=8ckaj5GVnMHUUFkGRJWFAudQPIDe0i5oubf7L3yszIM=", // Placeholder image URL
   },
   {
     id: 3,

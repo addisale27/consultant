@@ -190,9 +190,11 @@ const ApplicationForm: React.FC<ApplicatioFormProps> = ({ currentUser }) => {
 
   if (!currentUser?.active) {
     return (
-      <p className="text-center">
-        You have to activate your account first. Redirecting...
-      </p>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-center text-lg font-bold text-red-600 bg-white p-8 rounded-lg shadow-lg">
+          You have to activate your account first. Redirecting...
+        </p>
+      </div>
     );
   }
   return (

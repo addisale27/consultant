@@ -72,18 +72,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
-// Function to periodically clear expired tokens
-export async function clearExpiredTokens() {
-  try {
-    const now = new Date();
-    const deletedTokens = await prisma.activateToken.deleteMany({
-      where: {
-        expiresAt: { lt: now },
-      },
-    });
-    console.log("Expired tokens cleared:", deletedTokens.count);
-  } catch (error) {
-    console.error("Error clearing expired tokens:", error);
-  }
-}

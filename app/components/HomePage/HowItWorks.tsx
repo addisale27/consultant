@@ -7,7 +7,7 @@ const HowItWorks = () => {
   return (
     <div id="steps" className="p-4">
       <h1 className="text-2xl text-gray-700 text-center font-bold">
-        How nameofcom. Works
+        How Hero Educational &amp; Job Consultancy. Works
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 p-4 md:py-8 max-w-[1040px] mx-auto">
         {/* Step 1 */}

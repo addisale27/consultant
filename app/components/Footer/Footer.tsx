@@ -2,11 +2,8 @@ import Link from "next/link";
 import Container from "../Container";
 import FooterList from "./FooterList";
 import { MdFacebook } from "react-icons/md";
-import {
-  AiFillInstagram,
-  AiFillTwitterCircle,
-  AiFillYoutube,
-} from "react-icons/ai";
+import { AiFillInstagram, AiFillYoutube } from "react-icons/ai";
+import { FaTelegramPlane } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -25,10 +22,10 @@ const Footer = () => {
 
           <FooterList>
             <h3 className="text-base font-bold mb-2">Client Support</h3>
-            <Link href="#">Contact Us</Link>
+            <Link href="/contactUs">Contact Us</Link>
             <Link href="#">Application Process Guide</Link>
             <Link href="#">Scholarship Opportunities</Link>
-            <Link href="#">Track Your Application</Link>
+            <Link href="/myApplications">Track Your Application</Link>
             <Link href="#">FAQs</Link>
           </FooterList>
 
@@ -42,25 +39,52 @@ const Footer = () => {
               educational journey.
             </p>
             <p>
-              &copy; {new Date().getFullYear()} BiruhTesfaEducational
-              Consulting. All rights reserved!
+              &copy; {new Date().getFullYear()} Hero Educational and Job
+              Consultancy. All rights reserved!
             </p>
           </div>
           <FooterList>
-            <h3 className="text-base font-bold mb-2">Follow us</h3>
-            <div className="flex gap-2">
-              <Link href="#">
-                <MdFacebook size={24} />
-              </Link>
-              <Link href="#">
-                <AiFillTwitterCircle size={24} />
-              </Link>
-              <Link href="#">
-                <AiFillInstagram size={24} />
-              </Link>
-              <Link href="#">
-                <AiFillYoutube size={24} />
-              </Link>
+            <div className="flex flex-col gap-2 items-center justify-center">
+              <h3 className="text-base font-bold mb-2">Follow us</h3>
+              <div className="flex gap-2">
+                <Link
+                  href="https://www.facebook.com/YourFacebookProfile"
+                  target="_blank"
+                >
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
+                    <MdFacebook size={24} />
+                  </div>
+                </Link>
+                {/* <Link
+                href="https://twitter.com/YourTwitterProfile"
+                target="_blank"
+              >
+                <div className="w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
+                  <AiFillTwitterCircle size={24} />
+                </div>
+              </Link> */}
+                <Link
+                  href="https://www.instagram.com/YourInstagramProfile"
+                  target="_blank"
+                >
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
+                    <AiFillInstagram size={24} />
+                  </div>
+                </Link>
+                <Link
+                  href="https://www.youtube.com/c/YourYouTubeChannel"
+                  target="_blank"
+                >
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
+                    <AiFillYoutube size={24} />
+                  </div>
+                </Link>
+                <Link href="https://t.me/babi_ted" target="_blank">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
+                    <FaTelegramPlane size={24} />
+                  </div>
+                </Link>
+              </div>
             </div>
           </FooterList>
         </div>
