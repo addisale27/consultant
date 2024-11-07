@@ -46,6 +46,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
       const response = await axios.post("/api/register", data);
       if (response.status === 200) {
         setIsEmailSent(true);
+        console.log("The response from register api endpoin", response);
         toast.success(
           "Account Created! Please check your email to activate your account."
         );
