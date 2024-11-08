@@ -10,6 +10,8 @@ const nextConfig = {
       "www.planstudyabroad.com",
       "encrypted-tbn0.gstatic.com",
       "as2.ftcdn.net",
+      "c8.alamy.com",
+      "img.freepik.com",
     ],
   },
 };
