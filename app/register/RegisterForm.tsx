@@ -46,7 +46,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
       const response = await axios.post("/api/register", data);
       if (response.status === 200) {
         setIsEmailSent(true);
-        console.log("The response from register api endpoin", response);
+        console.log("The response from register api endpoint", response);
         toast.success(
           "Account Created! Please check your email to activate your account."
         );
@@ -85,6 +85,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   };
 
   useEffect(() => {
+    // If the user is logged in and active, navigate to the homepage
     if (currentUser?.active) {
       router.push("/");
       router.refresh();
