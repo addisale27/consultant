@@ -3,8 +3,8 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialProvider from "next-auth/providers/credentials";
 import NextAuth, { AuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
-import prisma from "@/libs/prismadb";
 
+import prisma from "@/libs/prismadb";
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -15,57 +15,38 @@ export const authOptions: AuthOptions = {
     CredentialProvider({
       name: "credentials",
       credentials: {
-        email: { label: "email", type: "email" },
-        password: { label: "password", type: "password" },
+        email: {
+          label: "email",
+          type: "email",
+        },
+        password: {
+          label: "password",
+          type: "password",
+        },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
+        if (!credentials?.email || !credentials.password)
           throw new Error("Invalid Email or Password!");
-        }
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: {
+            email: credentials.email,
+          },
         });
-        if (!user || !user.hashedPassword) {
+        if (!user || !user?.hashedPassword) {
           throw new Error("Invalid Email or Password!");
         }
-        if (!user.active) {
-          throw new Error(
-            "This account has not been activated. Please activate it."
-          );
-        }
+        if (!user.active)
+          throw new Error("This has not been activated please activate it.");
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
         );
         if (!isCorrectPassword) throw new Error("Invalid Email or Password!");
-        return user;
+        //you don`t have to return the user with its hashedpassword
+        return user; //the user go to the next auth session
       },
     }),
   ],
-  callbacks: {
-    async signIn({ user, account }) {
-      if (account && account.provider === "google" && user.email) {
-        // Check if user already exists in the database
-        const existingUser = await prisma.user.findUnique({
-          where: { email: user.email },
-        });
-
-        if (!existingUser) {
-          // Create the user if not exists and set `active` to false initially
-          await prisma.user.create({
-            data: { email: user.email, name: user.name, active: false },
-          });
-        }
-
-        // Update the `active` status to true for Google sign-ins
-        await prisma.user.update({
-          where: { email: user.email },
-          data: { active: true },
-        });
-      }
-      return true;
-    },
-  },
   pages: {
     signIn: "/login",
   },
@@ -75,5 +56,5 @@ export const authOptions: AuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
-
 export default NextAuth(authOptions);
+// export {handler as GET,handler as POSt}
