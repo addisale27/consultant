@@ -45,6 +45,19 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account && account.provider === "google" && user.email) {
+        // Check if user already exists in the database
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email },
+        });
+
+        if (!existingUser) {
+          // Create the user if not exists and set `active` to false initially
+          await prisma.user.create({
+            data: { email: user.email, name: user.name, active: false },
+          });
+        }
+
+        // Update the `active` status to true for Google sign-ins
         await prisma.user.update({
           where: { email: user.email },
           data: { active: true },
