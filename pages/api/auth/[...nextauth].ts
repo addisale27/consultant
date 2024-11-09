@@ -4,6 +4,7 @@ import CredentialProvider from "next-auth/providers/credentials";
 import NextAuth, { AuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
 import prisma from "@/libs/prismadb";
+
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -55,16 +56,43 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider === "google" && !user.active) {
+      // Check if the account is Google and if the user exists, create one if not
+      if (account?.provider === "google") {
+        if (!user.email) {
+          throw new Error("Google user does not have a valid email.");
+        }
+
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email! }, // We ensure user.email is not null here
+        });
+
+        if (!existingUser) {
+          // Create a new user for Google sign-in
+          await prisma.user.create({
+            data: {
+              email: user.email!,
+              name: user.name || "Google User",
+              image: user.image || "",
+              active: true, // Make sure to set active to true or as needed
+              hashedPassword: null, // No password needed for Google sign-in
+            },
+          });
+        }
+      }
+
+      // If the user is signing in with credentials, proceed normally
+      if (account?.provider === "credentials" && !user.active) {
         return false; // Prevent sign-in if the user is inactive
       }
+
       return true; // Allow sign-in for active users
     },
     async session({ session, user }) {
-      // Ensure session.user is defined before accessing it
+      // Add custom properties to the session
       if (session?.user) {
         session.user.id = user.id;
         session.user.email = user.email;
+        session.user.active = user.active;
       }
       return session;
     },
