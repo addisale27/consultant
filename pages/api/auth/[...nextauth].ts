@@ -3,8 +3,8 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialProvider from "next-auth/providers/credentials";
 import NextAuth, { AuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
-import prisma from "@/libs/prismadb";
 
+import prisma from "@/libs/prismadb";
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -36,13 +36,14 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid Email or Password!");
         }
         if (!user.active)
-          throw new Error("This has not been activated, please activate it.");
+          throw new Error("This has not been activated please activate it.");
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
         );
         if (!isCorrectPassword) throw new Error("Invalid Email or Password!");
-        return user;
+        //you don`t have to return the user with its hashedpassword
+        return user; //the user go to the next auth session
       },
     }),
   ],
@@ -54,55 +55,6 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-  callbacks: {
-    async signIn({ user, account }) {
-      // Check if the account is Google and if the user exists, create one if not
-      if (account?.provider === "google") {
-        if (!user.email) {
-          throw new Error("Google user does not have a valid email.");
-        }
-
-        const existingUser = await prisma.user.findUnique({
-          where: { email: user.email! }, // We ensure user.email is not null here
-        });
-
-        if (!existingUser) {
-          // Create a new user for Google sign-in
-          await prisma.user.create({
-            data: {
-              email: user.email!,
-              name: user.name || "Google User",
-              image: user.image || "",
-              active: true, // Make sure to set active to true or as needed
-              hashedPassword: null, // No password needed for Google sign-in
-            },
-          });
-        }
-      }
-
-      // If the user is signing in with credentials, proceed normally
-      if (account?.provider === "credentials" && !user.active) {
-        return false; // Prevent sign-in if the user is inactive
-      }
-
-      return true; // Allow sign-in for active users
-    },
-    async session({ session, user }) {
-      // Add custom properties to the session
-      if (session?.user) {
-        session.user.id = user.id;
-        session.user.email = user.email;
-        session.user.active = user.active;
-      }
-      return session;
-    },
-    async redirect({ url, baseUrl }) {
-      if (url === baseUrl || url.startsWith(baseUrl)) {
-        return baseUrl; // Redirect to home or any other page
-      }
-      return url;
-    },
-  },
 };
-
 export default NextAuth(authOptions);
+// export {handler as GET,handler as POSt}
