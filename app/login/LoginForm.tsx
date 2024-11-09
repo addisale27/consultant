@@ -11,11 +11,9 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { CurrentUser } from "../components/NavgationBar/UserMenu";
-
 interface RegisterFormProps {
   currentUser: CurrentUser | null;
 }
-
 const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();

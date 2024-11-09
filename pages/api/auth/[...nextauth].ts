@@ -3,7 +3,6 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialProvider from "next-auth/providers/credentials";
 import NextAuth, { AuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
-
 import prisma from "@/libs/prismadb";
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -36,14 +35,13 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid Email or Password!");
         }
         if (!user.active)
-          throw new Error("This has not been activated please activate it.");
+          throw new Error("This has not been activated, please activate it.");
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
         );
         if (!isCorrectPassword) throw new Error("Invalid Email or Password!");
-        //you don`t have to return the user with its hashedpassword
-        return user; //the user go to the next auth session
+        return user;
       },
     }),
   ],
@@ -55,6 +53,28 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google" && !user.active) {
+        return false; // Prevent sign-in if the user is inactive
+      }
+      return true; // Allow sign-in for active users
+    },
+    async session({ session, user }) {
+      // Ensure session.user is defined before accessing it
+      if (session?.user) {
+        session.user.id = user.id;
+        session.user.email = user.email;
+      }
+      return session;
+    },
+    async redirect({ url, baseUrl }) {
+      if (url === baseUrl || url.startsWith(baseUrl)) {
+        return baseUrl; // Redirect to home or any other page
+      }
+      return url;
+    },
+  },
 };
+
 export default NextAuth(authOptions);
-// export {handler as GET,handler as POSt}
