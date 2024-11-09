@@ -33,9 +33,9 @@ const ManageApplicationClient: React.FC<ManageApplicationClientProps> = ({
 
   const handleReviewed = (id: string) => {
     axios
-      .put("/api/application", { id, status: "reviewed" })
+      .put("/api/application", { id, status: "accepted" })
       .then(() => {
-        toast.success("Application reviewed");
+        toast.success("Application accepted");
         router.refresh();
       })
       .catch((error) => {
@@ -59,9 +59,9 @@ const ManageApplicationClient: React.FC<ManageApplicationClientProps> = ({
 
   const handleDenied = (id: string) => {
     axios
-      .put("/api/application", { id, status: "denied" })
+      .put("/api/application", { id, status: "rejected" })
       .then(() => {
-        toast.success("Application denied");
+        toast.success("Application rejected");
         router.refresh();
       })
       .catch((error) => {
@@ -107,16 +107,16 @@ const ManageApplicationClient: React.FC<ManageApplicationClientProps> = ({
                 bg="bg-slate-200"
                 color="text-slate-700"
               />
-            ) : params.row.status === "denied" ? (
+            ) : params.row.status === "rejected" ? (
               <Status
-                text="Denied"
+                text="Rejected"
                 icon={FaTimesCircle}
                 bg="bg-red-200"
                 color="text-red-700"
               />
-            ) : params.row.status === "reviewed" ? (
+            ) : params.row.status === "accepted" ? (
               <Status
-                text="Reviewed"
+                text="Accepted"
                 icon={MdDone}
                 bg="bg-green-200"
                 color="text-green-700"

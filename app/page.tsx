@@ -7,10 +7,16 @@ import SubBanner from "./components/HomePage/SubBanner";
 import HowItWorks from "./components/HomePage/HowItWorks";
 
 import { getScholarships } from "@/actions/getScholarships";
+import { getAcceptedApplications } from "@/actions/getAcceptedApplications";
+import AcceptedUsers from "./components/HomePage/AcceptedUser";
 
 const Home = async () => {
   const allScholarships = await getScholarships(); // Fetch scholarships
   console.log(allScholarships);
+  const acceptedApplications = await getAcceptedApplications();
+
+  const acceptedUsersName = acceptedApplications.map((app) => app.fullName);
+
   return (
     <div className="flex flex-col">
       <div>
@@ -39,7 +45,11 @@ const Home = async () => {
       <div className="mt-7">
         <HowItWorks />
       </div>
-
+      {acceptedUsersName.length !== 0 && (
+        <div>
+          <AcceptedUsers acceptedUserName={acceptedUsersName} />
+        </div>
+      )}
       <div className="mt-7 md:mt-[100px]">
         <Container>
           <Testimonial />
