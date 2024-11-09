@@ -112,7 +112,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         outline
         label="Sign up with Google"
         icon={AiOutlineGoogle}
-        onClick={() => signIn("google")}
+        onClick={() =>
+          signIn("google").then((callback) => {
+            setIsLoading(false);
+            if (callback?.ok) {
+              router.push("/");
+              router.refresh();
+              toast.success("Logged in");
+            } else if (callback?.error) {
+              toast.error(callback.error);
+            }
+          })
+        }
       />
       <hr className="bg-slate-300 w-full h-px" />
       <Input
