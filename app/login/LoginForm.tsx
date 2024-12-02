@@ -138,7 +138,7 @@ const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         onClick={handleSubmit(onSubmit)}
         disabled={isLoading}
       />
-      <div className="flex justify-between items-center w-full flex-row-reverse">
+      <div className="flex flex-col  justify-between items-center w-full md:flex-row-reverse">
         <div className="">
           <Link
             href="/passwordReset"
