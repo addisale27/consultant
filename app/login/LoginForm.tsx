@@ -3,7 +3,7 @@
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Button from "../components/Button";
 import Link from "next/link";
-import { AiOutlineGoogle } from "react-icons/ai";
+//import { AiOutlineGoogle } from "react-icons/ai";
 import Heading from "../components/Heading";
 import Input from "../components/Inputs/Input";
 import { useEffect, useState } from "react";
@@ -60,7 +60,7 @@ const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   return (
     <>
       <Heading title="Sign In" />
-      <Button
+      {/* <Button
         outline
         disabled={isLoading}
         label="Sign In with Google"
@@ -68,7 +68,7 @@ const LoginForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
         onClick={() => {
           signIn("google");
         }}
-      />
+      /> */}
 
       <hr className="bg-slate-300 w-full h-px" />
 
